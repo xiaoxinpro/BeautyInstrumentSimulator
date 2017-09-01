@@ -1,6 +1,6 @@
 ﻿namespace BeautyInstrumentSimulator
 {
-    partial class Form1
+    partial class frmMain
     {
         /// <summary>
         /// 必需的设计器变量。
@@ -28,9 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Text = "Form1";
+            this.SuspendLayout();
+            // 
+            // frmMain
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(192F, 192F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.ClientSize = new System.Drawing.Size(1346, 948);
+            this.Font = new System.Drawing.Font("微软雅黑", 10F);
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.Name = "frmMain";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "美容仪模拟器";
+            this.ResumeLayout(false);
+
         }
 
         #endregion
