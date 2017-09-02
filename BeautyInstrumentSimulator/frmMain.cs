@@ -15,6 +15,7 @@ namespace BeautyInstrumentSimulator
     public partial class frmMain : Form
     {
         public SerialPort sp1 = new SerialPort();
+        frmAbout FormAbout = new frmAbout();
 
         public frmMain()
         {
@@ -46,6 +47,11 @@ namespace BeautyInstrumentSimulator
         {
             this.Hide();
             this.DialogResult = DialogResult.OK;
+        }
+
+        private void 关于ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormAbout.Show();
         }
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
