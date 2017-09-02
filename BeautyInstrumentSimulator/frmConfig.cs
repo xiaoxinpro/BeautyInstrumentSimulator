@@ -171,7 +171,15 @@ namespace BeautyInstrumentSimulator
         private void btnOK_Click(object sender, EventArgs e)
         {
             SaveSerialData();
-            FormMain.Show();
+            this.Hide();
+            if(FormMain.ShowDialog() == DialogResult.OK)
+            {
+                this.Show();
+            }
+            else
+            {
+                FormMain.Show();
+            }
         }
 
         private void btnEnd_Click(object sender, EventArgs e)
@@ -256,6 +264,7 @@ namespace BeautyInstrumentSimulator
             string strStopBits = cbStop.Text;
             Int32 iBaudRate = Convert.ToInt32(strBaudRate);
             Int32 iDateBits = Convert.ToInt32(strDateBits);
+            Profile.StrPortName = cbSerial.Text;
             Profile.G_BAUDRATE = iBaudRate + "";       //波特率
             Profile.G_DATABITS = iDateBits + "";       //数据位
             switch (cbStop.Text)            //停止位
@@ -307,6 +316,14 @@ namespace BeautyInstrumentSimulator
                 Profile.G_DATA_RCVSTR = "FALSE";
             }   
             Profile.SaveProfile();
+        }
+
+        private void btnSwitch_Click(object sender, EventArgs e)
+        {
+            cbBaudRate.SelectedIndex = 4;
+            cbParity.SelectedIndex = 0;
+            cbDataBits.SelectedIndex = 3;
+            cbStop.SelectedIndex = 0;
         }
     }
 }

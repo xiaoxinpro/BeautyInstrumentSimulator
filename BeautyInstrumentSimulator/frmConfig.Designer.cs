@@ -88,8 +88,9 @@
             this.btnSwitch.Name = "btnSwitch";
             this.btnSwitch.Size = new System.Drawing.Size(252, 52);
             this.btnSwitch.TabIndex = 10;
-            this.btnSwitch.Text = "打开端口";
+            this.btnSwitch.Text = "默认配置";
             this.btnSwitch.UseVisualStyleBackColor = true;
+            this.btnSwitch.Click += new System.EventHandler(this.btnSwitch_Click);
             // 
             // cbParity
             // 
