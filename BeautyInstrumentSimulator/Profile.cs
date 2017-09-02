@@ -40,6 +40,7 @@ namespace INIFILE
         public static string G_DATA_SENDSTR = "FALSE";
         public static string G_DATA_RCVSTR = "FALSE";
 
-        public static bool IS_PORT_OPEN = false;
+        public static string StrPortName = "";
+
     }
 }
