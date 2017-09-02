@@ -47,8 +47,14 @@
             this.关于ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timUart = new System.Windows.Forms.Timer(this.components);
             this.rtCmd = new System.Windows.Forms.RichTextBox();
+            this.tsSerial = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tsBaudRate = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tsTime = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tsStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.timTime = new System.Windows.Forms.Timer(this.components);
             this.panel1.SuspendLayout();
             this.menuMain.SuspendLayout();
+            this.statusMain.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -99,7 +105,7 @@
             this.关于ToolStripMenuItem});
             this.menuMain.Location = new System.Drawing.Point(0, 0);
             this.menuMain.Name = "menuMain";
-            this.menuMain.Size = new System.Drawing.Size(974, 42);
+            this.menuMain.Size = new System.Drawing.Size(974, 39);
             this.menuMain.TabIndex = 2;
             this.menuMain.Text = "menuStrip1";
             // 
@@ -147,9 +153,14 @@
             // statusMain
             // 
             this.statusMain.ImageScalingSize = new System.Drawing.Size(32, 32);
-            this.statusMain.Location = new System.Drawing.Point(0, 547);
+            this.statusMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsSerial,
+            this.tsBaudRate,
+            this.tsTime,
+            this.tsStatus});
+            this.statusMain.Location = new System.Drawing.Point(0, 529);
             this.statusMain.Name = "statusMain";
-            this.statusMain.Size = new System.Drawing.Size(974, 22);
+            this.statusMain.Size = new System.Drawing.Size(974, 40);
             this.statusMain.TabIndex = 3;
             this.statusMain.Text = "statusStrip1";
             // 
@@ -203,7 +214,7 @@
             // 关于ToolStripMenuItem
             // 
             this.关于ToolStripMenuItem.Name = "关于ToolStripMenuItem";
-            this.关于ToolStripMenuItem.Size = new System.Drawing.Size(74, 38);
+            this.关于ToolStripMenuItem.Size = new System.Drawing.Size(74, 35);
             this.关于ToolStripMenuItem.Text = "关于";
             this.关于ToolStripMenuItem.Click += new System.EventHandler(this.关于ToolStripMenuItem_Click);
             // 
@@ -217,23 +228,62 @@
             this.rtCmd.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.rtCmd.Location = new System.Drawing.Point(15, 131);
+            this.rtCmd.Font = new System.Drawing.Font("宋体", 10.125F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.rtCmd.Location = new System.Drawing.Point(12, 131);
             this.rtCmd.Name = "rtCmd";
             this.rtCmd.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.rtCmd.Size = new System.Drawing.Size(950, 740);
+            this.rtCmd.Size = new System.Drawing.Size(950, 380);
             this.rtCmd.TabIndex = 4;
             this.rtCmd.Text = "";
             this.rtCmd.TextChanged += new System.EventHandler(this.rtCmd_TextChanged);
+            // 
+            // tsSerial
+            // 
+            this.tsSerial.AutoToolTip = true;
+            this.tsSerial.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
+            this.tsSerial.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsSerial.Name = "tsSerial";
+            this.tsSerial.Size = new System.Drawing.Size(159, 35);
+            this.tsSerial.Text = "串口：关闭   ";
+            // 
+            // tsBaudRate
+            // 
+            this.tsBaudRate.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
+            this.tsBaudRate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsBaudRate.Name = "tsBaudRate";
+            this.tsBaudRate.Size = new System.Drawing.Size(177, 35);
+            this.tsBaudRate.Text = "波特率：9600 ";
+            // 
+            // tsTime
+            // 
+            this.tsTime.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
+            this.tsTime.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsTime.Name = "tsTime";
+            this.tsTime.Size = new System.Drawing.Size(90, 35);
+            this.tsTime.Text = "时间：";
+            // 
+            // tsStatus
+            // 
+            this.tsStatus.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsStatus.Name = "tsStatus";
+            this.tsStatus.Size = new System.Drawing.Size(230, 35);
+            this.tsStatus.Text = "状态：等待开启串口";
+            // 
+            // timTime
+            // 
+            this.timTime.Enabled = true;
+            this.timTime.Interval = 1000;
+            this.timTime.Tick += new System.EventHandler(this.timTime_Tick);
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(192F, 192F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(974, 569);
-            this.Controls.Add(this.rtCmd);
             this.Controls.Add(this.statusMain);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.menuMain);
+            this.Controls.Add(this.rtCmd);
             this.Font = new System.Drawing.Font("微软雅黑", 10F);
             this.MainMenuStrip = this.menuMain;
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -242,11 +292,14 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "美容仪模拟器";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
+            this.Load += new System.EventHandler(this.frmMain_Load);
             this.Shown += new System.EventHandler(this.frmMain_Shown);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.menuMain.ResumeLayout(false);
             this.menuMain.PerformLayout();
+            this.statusMain.ResumeLayout(false);
+            this.statusMain.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -271,6 +324,11 @@
         private System.Windows.Forms.ToolStripMenuItem 关于ToolStripMenuItem;
         private System.Windows.Forms.Timer timUart;
         private System.Windows.Forms.RichTextBox rtCmd;
+        private System.Windows.Forms.ToolStripStatusLabel tsSerial;
+        private System.Windows.Forms.ToolStripStatusLabel tsBaudRate;
+        private System.Windows.Forms.ToolStripStatusLabel tsTime;
+        private System.Windows.Forms.ToolStripStatusLabel tsStatus;
+        private System.Windows.Forms.Timer timTime;
     }
 }
 

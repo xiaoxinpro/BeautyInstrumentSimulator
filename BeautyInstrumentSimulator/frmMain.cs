@@ -22,6 +22,10 @@ namespace BeautyInstrumentSimulator
             InitializeComponent();
         }
 
+        private void frmMain_Load(object sender, EventArgs e)
+        {
+        }
+
         private void frmMain_Shown(object sender, EventArgs e)
         {
             //界面初始化
@@ -29,11 +33,13 @@ namespace BeautyInstrumentSimulator
             cbAPP.SelectedIndex = 0;
 
             //串口配置初始化
+            sp1 = new SerialPort();
             Control.CheckForIllegalCrossThreadCalls = false;    //这个类中我们不检查跨线程的调用是否合法(因为.net 2.0以后加强了安全机制,，不允许在winform中直接跨线程访问控件的属性)
             sp1.DataReceived += new SerialDataReceivedEventHandler(sp1_DataReceived);           
             sp1.DtrEnable = true;
             sp1.RtsEnable = true;
             sp1.Close();
+            Console.WriteLine("串口初始化完成！");
         }
 
         private void rtCmd_TextChanged(object sender, EventArgs e)
@@ -45,6 +51,7 @@ namespace BeautyInstrumentSimulator
 
         private void 设置ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            funcCloseSerialPort();
             this.Hide();
             this.DialogResult = DialogResult.OK;
         }
@@ -92,6 +99,7 @@ namespace BeautyInstrumentSimulator
             {
                 //关闭自动发送数据
                 funcCloseUart();
+                funcOutputLog("通信功能已关闭");
             }
         }
 
@@ -247,6 +255,8 @@ namespace BeautyInstrumentSimulator
                     }
                     sp1.Open();     //打开串口
                     打开端口ToolStripMenuItem.Text = "关闭串口";
+                    tsSerial.Text = "串口：" + Profile.StrPortName;
+                    funcOutputLog("串口" + Profile.StrPortName + "已经开启");
                     btnOpenFind.Enabled = true;
                     funcCloseUart();
                 }
@@ -256,6 +266,7 @@ namespace BeautyInstrumentSimulator
                     btnOpenFind.Enabled = false;
                     funcCloseUart();
                     打开端口ToolStripMenuItem.Text = "打开串口";
+                    tsSerial.Text = "串口：关闭   ";
                     return;
                 }
             }
@@ -281,6 +292,8 @@ namespace BeautyInstrumentSimulator
                 btnOpenFind.Enabled = false;
                 funcCloseUart();
                 打开端口ToolStripMenuItem.Text = "打开串口";
+                funcOutputLog("串口" + Profile.StrPortName + "已经关闭");
+                tsSerial.Text = "串口：关闭   ";
             }
         }
 
@@ -288,9 +301,10 @@ namespace BeautyInstrumentSimulator
         {
             if (sp1.IsOpen)
             {
-                timUart.Interval = 1000;
+                timUart.Interval = 300;
                 timUart.Enabled = true;
                 btnOpenFind.Text = "关闭查询";
+                funcOutputLog("通信功能已开启");
             }
             else
             {
@@ -305,10 +319,27 @@ namespace BeautyInstrumentSimulator
             btnOpenFind.Text = "开启查询";
         }
 
+        public void funcOutputLog(string strLog)
+        {
+            rtCmd.AppendTextColorful("【提示】" + DateTime.Now.ToString() + " -> " + strLog, Color.Black);
+            tsStatus.Text = "状态：" + strLog;
+        }
+
+        private static int intCharNum = 0;
         private void timUart_Tick(object sender, EventArgs e)
         {
+            if(++intCharNum > 3)
+            {
+                intCharNum = 1;
+            }
+            tsStatus.Text = "状态：串口通信中"+ new string('.', intCharNum);
             sp1_DataSend("00 11 22 33 44 55 66 77 88 99");
         }
 
+        private void timTime_Tick(object sender, EventArgs e)
+        {
+            tsTime.Text =  DateTime.Now.ToString() + " ";
+            tsBaudRate.Text = "波特率：" + Profile.G_BAUDRATE + " ";
+        }
     }
 }
