@@ -30,6 +30,10 @@
         {
             this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.cbRH = new System.Windows.Forms.ComboBox();
+            this.cbAPP = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.btnEnd = new System.Windows.Forms.Button();
             this.btnOpenFind = new System.Windows.Forms.Button();
             this.menuMain = new System.Windows.Forms.MenuStrip();
@@ -37,21 +41,24 @@
             this.设置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.功能设置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.报文ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.清空报文ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.保存报文ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.statusMain = new System.Windows.Forms.StatusStrip();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.cbAPP = new System.Windows.Forms.ComboBox();
-            this.cbRH = new System.Windows.Forms.ComboBox();
+            this.menuClearCmd = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuSaveCmd = new System.Windows.Forms.ToolStripMenuItem();
             this.关于ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.timUart = new System.Windows.Forms.Timer(this.components);
-            this.rtCmd = new System.Windows.Forms.RichTextBox();
+            this.statusMain = new System.Windows.Forms.StatusStrip();
             this.tsSerial = new System.Windows.Forms.ToolStripStatusLabel();
             this.tsBaudRate = new System.Windows.Forms.ToolStripStatusLabel();
             this.tsTime = new System.Windows.Forms.ToolStripStatusLabel();
             this.tsStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.timUart = new System.Windows.Forms.Timer(this.components);
+            this.rtCmd = new System.Windows.Forms.RichTextBox();
             this.timTime = new System.Windows.Forms.Timer(this.components);
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.menuShowLogCmd = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuShowRcvData = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuShowSendData = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
+            this.menuShowCmdTime = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuShowCmdHead = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1.SuspendLayout();
             this.menuMain.SuspendLayout();
             this.statusMain.SuspendLayout();
@@ -71,6 +78,53 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(950, 66);
             this.panel1.TabIndex = 1;
+            // 
+            // cbRH
+            // 
+            this.cbRH.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbRH.Font = new System.Drawing.Font("微软雅黑", 9F);
+            this.cbRH.FormattingEnabled = true;
+            this.cbRH.Items.AddRange(new object[] {
+            "关闭",
+            "开启"});
+            this.cbRH.Location = new System.Drawing.Point(323, 11);
+            this.cbRH.Name = "cbRH";
+            this.cbRH.Size = new System.Drawing.Size(100, 39);
+            this.cbRH.TabIndex = 2;
+            // 
+            // cbAPP
+            // 
+            this.cbAPP.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbAPP.Font = new System.Drawing.Font("微软雅黑", 9F);
+            this.cbAPP.FormattingEnabled = true;
+            this.cbAPP.Items.AddRange(new object[] {
+            "无变化",
+            "初次连接",
+            "重新连接",
+            "查找设备",
+            "通信失败"});
+            this.cbAPP.Location = new System.Drawing.Point(606, 11);
+            this.cbAPP.Name = "cbAPP";
+            this.cbAPP.Size = new System.Drawing.Size(150, 39);
+            this.cbAPP.TabIndex = 2;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(462, 11);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(149, 35);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "APP状态：";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(185, 11);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(150, 35);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "水份检测：";
             // 
             // btnEnd
             // 
@@ -132,23 +186,39 @@
             // 报文ToolStripMenuItem
             // 
             this.报文ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.清空报文ToolStripMenuItem,
-            this.保存报文ToolStripMenuItem});
+            this.menuClearCmd,
+            this.menuSaveCmd,
+            this.toolStripMenuItem1,
+            this.menuShowLogCmd,
+            this.menuShowSendData,
+            this.menuShowRcvData,
+            this.toolStripMenuItem2,
+            this.menuShowCmdTime,
+            this.menuShowCmdHead});
             this.报文ToolStripMenuItem.Name = "报文ToolStripMenuItem";
-            this.报文ToolStripMenuItem.Size = new System.Drawing.Size(74, 35);
+            this.报文ToolStripMenuItem.Size = new System.Drawing.Size(74, 38);
             this.报文ToolStripMenuItem.Text = "报文";
             // 
-            // 清空报文ToolStripMenuItem
+            // menuClearCmd
             // 
-            this.清空报文ToolStripMenuItem.Name = "清空报文ToolStripMenuItem";
-            this.清空报文ToolStripMenuItem.Size = new System.Drawing.Size(268, 38);
-            this.清空报文ToolStripMenuItem.Text = "清空报文";
+            this.menuClearCmd.Name = "menuClearCmd";
+            this.menuClearCmd.Size = new System.Drawing.Size(268, 38);
+            this.menuClearCmd.Text = "清空报文";
+            this.menuClearCmd.Click += new System.EventHandler(this.menuClearCmd_Click);
             // 
-            // 保存报文ToolStripMenuItem
+            // menuSaveCmd
             // 
-            this.保存报文ToolStripMenuItem.Name = "保存报文ToolStripMenuItem";
-            this.保存报文ToolStripMenuItem.Size = new System.Drawing.Size(268, 38);
-            this.保存报文ToolStripMenuItem.Text = "保存报文";
+            this.menuSaveCmd.Name = "menuSaveCmd";
+            this.menuSaveCmd.Size = new System.Drawing.Size(268, 38);
+            this.menuSaveCmd.Text = "保存报文";
+            this.menuSaveCmd.Click += new System.EventHandler(this.menuSaveCmd_Click);
+            // 
+            // 关于ToolStripMenuItem
+            // 
+            this.关于ToolStripMenuItem.Name = "关于ToolStripMenuItem";
+            this.关于ToolStripMenuItem.Size = new System.Drawing.Size(74, 35);
+            this.关于ToolStripMenuItem.Text = "关于";
+            this.关于ToolStripMenuItem.Click += new System.EventHandler(this.关于ToolStripMenuItem_Click);
             // 
             // statusMain
             // 
@@ -163,79 +233,6 @@
             this.statusMain.Size = new System.Drawing.Size(974, 40);
             this.statusMain.TabIndex = 3;
             this.statusMain.Text = "statusStrip1";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(185, 11);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(150, 35);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "水份检测：";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(462, 11);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(149, 35);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "APP状态：";
-            // 
-            // cbAPP
-            // 
-            this.cbAPP.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbAPP.Font = new System.Drawing.Font("微软雅黑", 9F);
-            this.cbAPP.FormattingEnabled = true;
-            this.cbAPP.Items.AddRange(new object[] {
-            "无变化",
-            "初次连接",
-            "重新连接",
-            "查找设备",
-            "通信失败"});
-            this.cbAPP.Location = new System.Drawing.Point(606, 11);
-            this.cbAPP.Name = "cbAPP";
-            this.cbAPP.Size = new System.Drawing.Size(150, 39);
-            this.cbAPP.TabIndex = 2;
-            // 
-            // cbRH
-            // 
-            this.cbRH.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbRH.Font = new System.Drawing.Font("微软雅黑", 9F);
-            this.cbRH.FormattingEnabled = true;
-            this.cbRH.Items.AddRange(new object[] {
-            "关闭",
-            "开启"});
-            this.cbRH.Location = new System.Drawing.Point(323, 11);
-            this.cbRH.Name = "cbRH";
-            this.cbRH.Size = new System.Drawing.Size(100, 39);
-            this.cbRH.TabIndex = 2;
-            // 
-            // 关于ToolStripMenuItem
-            // 
-            this.关于ToolStripMenuItem.Name = "关于ToolStripMenuItem";
-            this.关于ToolStripMenuItem.Size = new System.Drawing.Size(74, 35);
-            this.关于ToolStripMenuItem.Text = "关于";
-            this.关于ToolStripMenuItem.Click += new System.EventHandler(this.关于ToolStripMenuItem_Click);
-            // 
-            // timUart
-            // 
-            this.timUart.Interval = 300;
-            this.timUart.Tick += new System.EventHandler(this.timUart_Tick);
-            // 
-            // rtCmd
-            // 
-            this.rtCmd.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.rtCmd.Font = new System.Drawing.Font("宋体", 10.125F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.rtCmd.Location = new System.Drawing.Point(12, 131);
-            this.rtCmd.Name = "rtCmd";
-            this.rtCmd.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.rtCmd.Size = new System.Drawing.Size(950, 380);
-            this.rtCmd.TabIndex = 4;
-            this.rtCmd.Text = "";
-            this.rtCmd.TextChanged += new System.EventHandler(this.rtCmd_TextChanged);
             // 
             // tsSerial
             // 
@@ -259,8 +256,10 @@
             this.tsTime.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
             this.tsTime.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.tsTime.Name = "tsTime";
+            this.tsTime.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.tsTime.Size = new System.Drawing.Size(90, 35);
             this.tsTime.Text = "时间：";
+            this.tsTime.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // tsStatus
             // 
@@ -268,12 +267,87 @@
             this.tsStatus.Name = "tsStatus";
             this.tsStatus.Size = new System.Drawing.Size(230, 35);
             this.tsStatus.Text = "状态：等待开启串口";
+            this.tsStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // timUart
+            // 
+            this.timUart.Interval = 300;
+            this.timUart.Tick += new System.EventHandler(this.timUart_Tick);
+            // 
+            // rtCmd
+            // 
+            this.rtCmd.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.rtCmd.Font = new System.Drawing.Font("宋体", 10.125F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.rtCmd.Location = new System.Drawing.Point(12, 131);
+            this.rtCmd.Name = "rtCmd";
+            this.rtCmd.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
+            this.rtCmd.Size = new System.Drawing.Size(950, 380);
+            this.rtCmd.TabIndex = 4;
+            this.rtCmd.Text = "";
+            this.rtCmd.TextChanged += new System.EventHandler(this.rtCmd_TextChanged);
             // 
             // timTime
             // 
             this.timTime.Enabled = true;
             this.timTime.Interval = 1000;
             this.timTime.Tick += new System.EventHandler(this.timTime_Tick);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(265, 6);
+            // 
+            // menuShowLogCmd
+            // 
+            this.menuShowLogCmd.Checked = true;
+            this.menuShowLogCmd.CheckOnClick = true;
+            this.menuShowLogCmd.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.menuShowLogCmd.Name = "menuShowLogCmd";
+            this.menuShowLogCmd.Size = new System.Drawing.Size(268, 38);
+            this.menuShowLogCmd.Text = "显示提示信息";
+            // 
+            // menuShowRcvData
+            // 
+            this.menuShowRcvData.Checked = true;
+            this.menuShowRcvData.CheckOnClick = true;
+            this.menuShowRcvData.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.menuShowRcvData.Name = "menuShowRcvData";
+            this.menuShowRcvData.Size = new System.Drawing.Size(268, 38);
+            this.menuShowRcvData.Text = "显示接收数据";
+            // 
+            // menuShowSendData
+            // 
+            this.menuShowSendData.Checked = true;
+            this.menuShowSendData.CheckOnClick = true;
+            this.menuShowSendData.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.menuShowSendData.Name = "menuShowSendData";
+            this.menuShowSendData.Size = new System.Drawing.Size(268, 38);
+            this.menuShowSendData.Text = "显示发送数据";
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(265, 6);
+            // 
+            // menuShowCmdTime
+            // 
+            this.menuShowCmdTime.Checked = true;
+            this.menuShowCmdTime.CheckOnClick = true;
+            this.menuShowCmdTime.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.menuShowCmdTime.Name = "menuShowCmdTime";
+            this.menuShowCmdTime.Size = new System.Drawing.Size(268, 38);
+            this.menuShowCmdTime.Text = "显示报文时间";
+            // 
+            // menuShowCmdHead
+            // 
+            this.menuShowCmdHead.Checked = true;
+            this.menuShowCmdHead.CheckOnClick = true;
+            this.menuShowCmdHead.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.menuShowCmdHead.Name = "menuShowCmdHead";
+            this.menuShowCmdHead.Size = new System.Drawing.Size(268, 38);
+            this.menuShowCmdHead.Text = "显示报文头";
             // 
             // frmMain
             // 
@@ -314,8 +388,8 @@
         private System.Windows.Forms.ToolStripMenuItem 设置ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 功能设置ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 报文ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 清空报文ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 保存报文ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem menuClearCmd;
+        private System.Windows.Forms.ToolStripMenuItem menuSaveCmd;
         private System.Windows.Forms.StatusStrip statusMain;
         private System.Windows.Forms.ComboBox cbRH;
         private System.Windows.Forms.ComboBox cbAPP;
@@ -329,6 +403,13 @@
         private System.Windows.Forms.ToolStripStatusLabel tsTime;
         private System.Windows.Forms.ToolStripStatusLabel tsStatus;
         private System.Windows.Forms.Timer timTime;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem menuShowLogCmd;
+        private System.Windows.Forms.ToolStripMenuItem menuShowSendData;
+        private System.Windows.Forms.ToolStripMenuItem menuShowRcvData;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem menuShowCmdTime;
+        private System.Windows.Forms.ToolStripMenuItem menuShowCmdHead;
     }
 }
 

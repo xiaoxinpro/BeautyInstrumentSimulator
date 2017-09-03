@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.IO.Ports;
 using INIFILE;
 using DocDetector.Core.Extensions;
+using System.IO;
 
 namespace BeautyInstrumentSimulator
 {
@@ -39,7 +40,9 @@ namespace BeautyInstrumentSimulator
             sp1.DtrEnable = true;
             sp1.RtsEnable = true;
             sp1.Close();
-            Console.WriteLine("串口初始化完成！");
+
+            rtCmd.Clear();
+            funcOutputLog("准备就绪，等待串口开启。");
         }
 
         private void rtCmd_TextChanged(object sender, EventArgs e)
@@ -108,7 +111,7 @@ namespace BeautyInstrumentSimulator
             if (sp1.IsOpen)
             {
                 //输出当前时间
-                string strTextBuff = "【接收】" + DateTime.Now.ToString() + " -> ";
+                string strTextBuff = "";
 
                 byte[] byteRead = new byte[sp1.BytesToRead];    //BytesToRead:sp1接收的字符个数
                 if (Profile.G_DATA_RCVSTR == "TRUE")            //接收字符串格式
@@ -134,15 +137,18 @@ namespace BeautyInstrumentSimulator
                     }
                     catch (System.Exception ex)
                     {
-                        rtCmd.AppendTextColorful("【接收出错】"+ ex.Message, Color.Red);
+                        //rtCmd.AppendTextColorful("【接收出错】"+ ex.Message, Color.Red);
+                        funcOutputLog("【接收出错】" + ex.Message, "错误");
                         return;
                     }
                 }
-                rtCmd.AppendTextColorful(strTextBuff, Color.Green);
+                //rtCmd.AppendTextColorful(strTextBuff, Color.Green);
+                funcOutputLog(strTextBuff, "接收");
             }
             else
             {
-                rtCmd.AppendTextColorful("【串口出错】串口没有被打开。" , Color.Red);
+                //rtCmd.AppendTextColorful("【串口出错】串口没有被打开。" , Color.Red);
+                funcOutputLog("【串口出错】串口没有被打开。", "错误");
             }
         }
 
@@ -151,7 +157,7 @@ namespace BeautyInstrumentSimulator
             if (sp1.IsOpen)
             {
                 //输出当前时间
-                string strTextBuff = "【发送】" + DateTime.Now.ToString() + " -> ";
+                string strTextBuff = "";
 
                 if (Profile.G_DATA_SENDSTR == "TRUE")    //字符串格式发送
                 {
@@ -198,7 +204,8 @@ namespace BeautyInstrumentSimulator
                         }
                         catch (System.Exception ex)
                         {
-                            rtCmd.AppendTextColorful("【发送出错】字节越界，请逐个字节输入！", Color.Red);
+                            //rtCmd.AppendTextColorful("【发送出错】字节越界，请逐个字节输入！", Color.Red);
+                            funcOutputLog("【发送出错】字节越界，请逐个字节输入！", "错误");
                             return;
                         }
                         ii++;
@@ -206,7 +213,8 @@ namespace BeautyInstrumentSimulator
                     sp1.Write(byteBuffer, 0, byteBuffer.Length);
                     strTextBuff += strBuffHex;
                 }
-                rtCmd.AppendTextColorful(strTextBuff, Color.Blue);
+                //rtCmd.AppendTextColorful(strTextBuff, Color.Blue);
+                funcOutputLog(strTextBuff, "发送");
             }
         }
 
@@ -319,10 +327,57 @@ namespace BeautyInstrumentSimulator
             btnOpenFind.Text = "开启查询";
         }
 
-        public void funcOutputLog(string strLog)
+        public void funcOutputLog(string strLog,string strHead = "提示")
         {
-            rtCmd.AppendTextColorful("【提示】" + DateTime.Now.ToString() + " -> " + strLog, Color.Black);
-            tsStatus.Text = "状态：" + strLog;
+            if ((strHead == "提示") || (strHead == "错误") || (strHead == "警告") || (strHead == "状态"))
+            {
+                tsStatus.Text = "状态：" + strLog;
+                if (!menuShowLogCmd.Checked || (strHead == "状态"))
+                {
+                    return;
+                }
+            }
+
+            Color color = Color.Black;
+            switch (strHead)
+            {
+                case "提示":
+                    color = Color.Black;
+                    break;
+                case "发送":
+                    color = Color.Blue;
+                    if (!menuShowSendData.Checked) return;
+                    break;
+                case "接收":
+                    color = Color.Green;
+                    if (!menuShowRcvData.Checked) return;
+                    break;
+                case "错误":
+                    color = Color.Red;
+                    break;
+                case "警告":
+                    color = Color.Orange;
+                    break;
+                default:
+                    return;
+            }
+
+            string strTime = "";
+            if (menuShowCmdTime.Checked)
+            {
+                strTime = DateTime.Now.ToString() + " -> ";
+            }
+
+            if (menuShowCmdHead.Checked)
+            {
+                strHead = "【" + strHead + "】";
+            }
+            else
+            {
+                strHead = "";
+            }
+            rtCmd.AppendTextColorful(strHead + strTime + strLog, color);
+
         }
 
         private static int intCharNum = 0;
@@ -332,7 +387,7 @@ namespace BeautyInstrumentSimulator
             {
                 intCharNum = 1;
             }
-            tsStatus.Text = "状态：串口通信中"+ new string('.', intCharNum);
+            funcOutputLog("串口通信中" + new string('.', intCharNum), "状态");
             sp1_DataSend("00 11 22 33 44 55 66 77 88 99");
         }
 
@@ -340,6 +395,29 @@ namespace BeautyInstrumentSimulator
         {
             tsTime.Text =  DateTime.Now.ToString() + " ";
             tsBaudRate.Text = "波特率：" + Profile.G_BAUDRATE + " ";
+        }
+
+        private void menuClearCmd_Click(object sender, EventArgs e)
+        {
+            rtCmd.Clear();
+        }
+
+        private void menuSaveCmd_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog save = new SaveFileDialog();
+            save.Filter = "文本格式|*.txt|所有格式|*.*";
+            save.RestoreDirectory = true;
+            save.FilterIndex = 1;
+            if (save.ShowDialog() == DialogResult.OK)
+            {
+                funcOutputLog("报文保存中。。。", "状态");
+                string str = save.FileName;
+                StreamWriter sw = File.CreateText(str);
+                sw.Write(this.rtCmd.Text.Replace("\n", "\r\n"));
+                sw.Flush();
+                sw.Close();
+                funcOutputLog("报文保存完成", "状态");
+            }
         }
     }
 }
