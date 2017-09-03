@@ -125,6 +125,7 @@ namespace BeautyInstrumentSimulator
                     {
                         Byte[] receivedData = new Byte[sp1.BytesToRead];        //创建接收字节数组
                         sp1.Read(receivedData, 0, receivedData.Length);         //读取数据
+                        RcvDataProcess(receivedData);                           //接收数据处理
                         sp1.DiscardInBuffer();                                  //清空SerialPort控件的Buffer
                         string strRcv = null;
                         for (int i = 0; i < receivedData.Length; i++)
@@ -304,7 +305,7 @@ namespace BeautyInstrumentSimulator
         {
             if (sp1.IsOpen)
             {
-                timUart.Interval = 300;
+                timUart.Interval = 500;
                 timUart.Enabled = true;
                 btnOpenFind.Text = "关闭查询";
                 funcOutputLog("通信功能已开启");
@@ -393,15 +394,193 @@ namespace BeautyInstrumentSimulator
 
         }
 
+        private void RcvDataProcess(byte[] byteBuff)
+        {
+            if(byteBuff.Length == 17)
+            {
+                if ((byteBuff[0] == 0x22) && (byteBuff[1] == 0x0F) && (byteBuff[2] == 0xA5)) 
+                {
+                    if(byteBuff[16] == Uart.byteCheakSum(byteBuff, 2, 14))
+                    {
+                        //状态
+                        switch (byteBuff[4])
+                        {
+                            case 0x00:
+                                txtRcvStatus.Text = "关机";
+                                break;
+                            case 0x01:
+                                txtRcvStatus.Text = "运行中";
+                                break;
+                            case 0x02:
+                                txtRcvStatus.Text = "暂停";
+                                break;
+                            case 0x03:
+                                txtRcvStatus.Text = "完成";
+                                break;
+                            case 0xA1:
+                                txtRcvStatus.Text = "配置";
+                                break;
+                            default:
+                                txtRcvStatus.Text = "未定义" + byteBuff[4].ToString("X2");
+                                break;
+                        }
+
+                        //模式
+                        if (Uart.isBinTest(byteBuff[5], 3))
+                        {
+                            txtRcvMode.Text = "水份检测";
+                            txtRcvAdjust.Text = "无";
+                        }
+                        else
+                        {
+                            string strMode = "无";
+                            string strAdjust = "无"; 
+                            if(Uart.isBinTest(byteBuff[5], 0))
+                            {
+                                strAdjust = "弱";
+                            }
+                            if (Uart.isBinTest(byteBuff[5], 1))
+                            {
+                                strAdjust = "中";
+                            }
+                            if (Uart.isBinTest(byteBuff[5], 2))
+                            {
+                                strAdjust = "强";
+                            }
+                            if (Uart.isBinTest(byteBuff[5], 4))
+                            {
+                                strMode = "清洁";
+                            }
+                            if (Uart.isBinTest(byteBuff[5], 5))
+                            {
+                                strMode = "保湿";
+                            }
+                            if (Uart.isBinTest(byteBuff[5], 6))
+                            {
+                                strMode = "导入";
+                            }
+                            if (Uart.isBinTest(byteBuff[5], 7))
+                            {
+                                strMode = "冷敷";
+                            }
+                            txtRcvMode.Text = strMode;
+                            txtRcvAdjust.Text = strAdjust;
+                        }
+
+                        //运行时长
+                        txtRcvTime.Text = byteBuff[6].ToString() + "秒";
+
+                        //水份百分比
+                        txtRcvRh1.Text = byteBuff[7].ToString() + "%";
+
+                        //油分百分比
+                        txtRcvRh2.Text = byteBuff[8].ToString() + "%";
+
+                        //弹性百分比
+                        txtRcvRh3.Text = byteBuff[9].ToString() + "%";
+
+                        //加热片温度
+                        txtRcvHotTemp.Text = byteBuff[10].ToString() + "℃";
+
+                        //环境温度
+                        txtRcvThTemp.Text = byteBuff[11].ToString() + "℃";
+
+                        //水份参数
+                        txtRcvRhH.Text = "0x" + byteBuff[12].ToString("X2") + byteBuff[13].ToString("X2");
+
+                        //软件版本号
+                        txtRcvVersion.Text = "V"+byteBuff[15].ToString();
+                    }
+                    else
+                    {
+                        //检验和错误
+                    }
+                }
+            }
+        }
+
+        private bool isSendDataChange = false;
+        private static byte byteSendDataRH = 0x00;
+        private void cbRH_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            byte tmp = 0x00;
+            if(cbRH.SelectedIndex == 1)
+            {
+                tmp = 0x08;
+            }
+            else
+            {
+                tmp = 0x00;
+            }
+            if (tmp != byteSendDataRH) 
+            {
+                isSendDataChange = true;
+                byteSendDataRH = tmp;
+            }
+        }
+
+        private static byte byteSendDataAPP = 0x00;
+        private void cbAPP_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            byte tmp = 0x00;
+            switch (cbAPP.SelectedIndex)
+            {
+                case 1:
+                    tmp = 0xA0;
+                    break;
+                case 2:
+                    tmp = 0xA1;
+                    break;
+                case 3:
+                    tmp = 0xA2;
+                    break;
+                case 4:
+                    tmp = 0xAE;
+                    break;
+                default:
+                    tmp = 0x00;
+                    break;
+            }
+            if(tmp != byteSendDataAPP)
+            {
+                isSendDataChange = true;
+                byteSendDataAPP = tmp;
+            }
+        }
+
         private static int intCharNum = 0;
         private void timUart_Tick(object sender, EventArgs e)
         {
-            if(++intCharNum > 3)
+            byte[] byteSendData = { 0x22, 0x06, 0xA5, 0x00, 0x00, 0x00, 0x01, 0x00 };
+            //设置命令帧类型
+            if (isSendDataChange)
+            {
+                isSendDataChange = false;
+                byteSendData[3] = 0x01;
+            }
+
+            //设置APP状态
+            byteSendData[4] = byteSendDataAPP;
+            if (byteSendDataAPP != 0x00)
+            {
+                byteSendDataAPP = 0x00;
+                cbAPP.SelectedIndex = 0; // 复位APP状态
+            }
+
+            //设置水份检测开关
+            byteSendData[5] = byteSendDataRH;
+
+            //计算校验和
+            byteSendData[byteSendData.Length - 1] = Uart.byteCheakSum(byteSendData, 2, 5);
+
+            //发送数据
+            sp1_DataSend(Uart.byteToHexStr(byteSendData));
+
+            if (++intCharNum > 3)
             {
                 intCharNum = 1;
             }
             funcOutputLog("串口通信中" + new string('.', intCharNum), "状态");
-            sp1_DataSend("00 11 22 33 44 55 66 77 88 99");
         }
 
         private void timTime_Tick(object sender, EventArgs e)
@@ -456,5 +635,6 @@ namespace BeautyInstrumentSimulator
                 menuOutputCmd.Checked = true;
             }
         }
+
     }
 }
