@@ -137,17 +137,14 @@ namespace BeautyInstrumentSimulator
                     }
                     catch (System.Exception ex)
                     {
-                        //rtCmd.AppendTextColorful("【接收出错】"+ ex.Message, Color.Red);
                         funcOutputLog("【接收出错】" + ex.Message, "错误");
                         return;
                     }
                 }
-                //rtCmd.AppendTextColorful(strTextBuff, Color.Green);
                 funcOutputLog(strTextBuff, "接收");
             }
             else
             {
-                //rtCmd.AppendTextColorful("【串口出错】串口没有被打开。" , Color.Red);
                 funcOutputLog("【串口出错】串口没有被打开。", "错误");
             }
         }
@@ -204,7 +201,6 @@ namespace BeautyInstrumentSimulator
                         }
                         catch (System.Exception ex)
                         {
-                            //rtCmd.AppendTextColorful("【发送出错】字节越界，请逐个字节输入！", Color.Red);
                             funcOutputLog("【发送出错】字节越界，请逐个字节输入！", "错误");
                             return;
                         }
@@ -213,7 +209,6 @@ namespace BeautyInstrumentSimulator
                     sp1.Write(byteBuffer, 0, byteBuffer.Length);
                     strTextBuff += strBuffHex;
                 }
-                //rtCmd.AppendTextColorful(strTextBuff, Color.Blue);
                 funcOutputLog(strTextBuff, "发送");
             }
         }
@@ -376,7 +371,25 @@ namespace BeautyInstrumentSimulator
             {
                 strHead = "";
             }
+
             rtCmd.AppendTextColorful(strHead + strTime + strLog, color);
+
+            if (menuOutputCmd.Checked && (strHead=="【发送】" || strHead=="【接收】"))
+            {
+                try
+                {
+                    StreamWriter swOutputCmd = File.AppendText(strOutputCmd);
+                    swOutputCmd.WriteLine(strHead + strTime + strLog);
+                    swOutputCmd.Flush();
+                    swOutputCmd.Close();
+                }
+                catch
+                {
+                    menuOutputCmd.Checked = false;
+                    MessageBox.Show("动态输出文件无法写入，已关闭。", "错误");
+                }
+
+            }
 
         }
 
@@ -417,6 +430,30 @@ namespace BeautyInstrumentSimulator
                 sw.Flush();
                 sw.Close();
                 funcOutputLog("报文保存完成", "状态");
+            }
+        }
+
+        private static string strOutputCmd = "";
+        private void menuOutputCmd_Click(object sender, EventArgs e)
+        {
+            if (menuOutputCmd.Checked)
+            {
+                menuOutputCmd.Checked = false;
+                return;
+            }
+            SaveFileDialog save = new SaveFileDialog();
+            save.Filter = "文本格式|*.txt|所有格式|*.*";
+            save.RestoreDirectory = true;
+            save.FilterIndex = 1;
+            if (save.ShowDialog() == DialogResult.OK)
+            {
+                strOutputCmd = save.FileName;
+                StreamWriter swOutputCmd = File.CreateText(strOutputCmd);
+                swOutputCmd.Write("");
+                swOutputCmd.Flush();
+                swOutputCmd.Close();
+                funcOutputLog("开启报文动态输出", "状态");
+                menuOutputCmd.Checked = true;
             }
         }
     }
