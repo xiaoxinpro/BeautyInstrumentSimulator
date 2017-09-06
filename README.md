@@ -29,5 +29,8 @@ Beauty Instrument Simulator连续6次接收不到Beauty Instrument的命令帧�
 
 请参见 `Beauty Instrument与手机APP通信协议 V1.0` 与 `BC76xx_Programming Guide_vTmp` 文档，这里将不再赘述。
 
+## 编译下载
+
+最新测试版：[BeautyInstrumentSimulator.exe](https://raw.githubusercontent.com/xiaoxinpro/BeautyInstrumentSimulator/master/BeautyInstrumentSimulator/bin/Debug/BeautyInstrumentSimulator.exe)
 
 
