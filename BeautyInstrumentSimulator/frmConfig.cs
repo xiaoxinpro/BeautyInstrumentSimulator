@@ -158,23 +158,21 @@ namespace BeautyInstrumentSimulator
                     }
             }
 
-            //检查是否含有串口
-            if (SerialPort.GetPortNames().Length == 0)
-            {
-                MessageBox.Show("请连接串口设备！", "Error");
-            }
         }
 
         private void btnOK_Click(object sender, EventArgs e)
         {
             SaveSerialData();
             this.Hide();
-            if(FormMain.ShowDialog() == DialogResult.OK)
+            this.timSerial.Enabled = false;
+            if (FormMain.ShowDialog() == DialogResult.OK)
             {
+                this.timSerial.Enabled = true;
                 this.Show();
             }
             else
             {
+                this.timSerial.Enabled = false;
                 FormMain.Show();
             }
         }
@@ -206,7 +204,7 @@ namespace BeautyInstrumentSimulator
                 {
                     this.Focus(); //使下拉列表失去焦点后清空列表
                     cbSerial.Items.Clear();
-                    MessageBox.Show("串口设备失去连接！", "Error");
+                    MessageBox.Show("串口设备出现异常，请重新连接。", "错误", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 }
                 return;
             }

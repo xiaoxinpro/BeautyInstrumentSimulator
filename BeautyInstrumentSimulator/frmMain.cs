@@ -231,7 +231,16 @@ namespace BeautyInstrumentSimulator
                         }
                         ii++;
                     }
-                    sp1.Write(byteBuffer, 0, byteBuffer.Length);
+                    try
+                    {
+                        sp1.Write(byteBuffer, 0, byteBuffer.Length);
+                    }
+                    catch (Exception)
+                    {
+                        funcCloseSerialPort();
+                        MessageBox.Show("串口设备出现异常，请重新连接。", "错误", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                        return;
+                    }
                     strTextBuff += strBuffHex;
                 }
                 funcOutputLog(strTextBuff, "发送");
@@ -290,7 +299,7 @@ namespace BeautyInstrumentSimulator
                 }
                 catch (System.Exception ex)
                 {
-                    MessageBox.Show("Error:" + ex.Message, "Error");
+                    MessageBox.Show(ex.Message + "\r\n请重新连接串口设备或点击串口设置重新选择串口", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     btnOpenFind.Enabled = false;
                     funcCloseUart();
                     打开端口ToolStripMenuItem.Text = "打开串口";
@@ -300,29 +309,27 @@ namespace BeautyInstrumentSimulator
             }
             else
             {
-                MessageBox.Show("端口已被打开","Error");
+                MessageBox.Show("端口已被打开", "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
             }
         }
 
         public void funcCloseSerialPort()
         {
-            if (sp1.IsOpen)
+            btnOpenFind.Enabled = false;
+            funcCloseUart();
+            打开端口ToolStripMenuItem.Text = "打开串口";
+            funcOutputLog("串口" + Profile.StrPortName + "已经关闭");
+            tsSerial.Text = "串口：关闭   ";
+
+            try
             {
-                try
-                {
-                    sp1.Close();
-                }
-                catch
-                {
-                    MessageBox.Show("关闭串口时发生未知错误。", "Error");
-                    return;
-                }
-                btnOpenFind.Enabled = false;
-                funcCloseUart();
-                打开端口ToolStripMenuItem.Text = "打开串口";
-                funcOutputLog("串口" + Profile.StrPortName + "已经关闭");
-                tsSerial.Text = "串口：关闭   ";
+                sp1.Close();
             }
+            catch
+            {
+                return;
+            }
+
         }
 
         public void funcOpenUart()
@@ -425,7 +432,7 @@ namespace BeautyInstrumentSimulator
                 catch
                 {
                     menuOutputCmd.Checked = false;
-                    MessageBox.Show("动态输出文件无法写入，已关闭。", "错误");
+                    MessageBox.Show("动态输出文件无法写入，已关闭。", "错误", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 }
 
             }
@@ -625,6 +632,14 @@ namespace BeautyInstrumentSimulator
         {
             tsTime.Text =  DateTime.Now.ToString() + " ";
             tsBaudRate.Text = "波特率：" + Profile.G_BAUDRATE + " ";
+            if(打开端口ToolStripMenuItem.Text == "打开串口")
+            {
+                funcOutputLog("等待串口打开。", "状态");
+            }
+            else if(btnOpenFind.Text == "开启查询")
+            {
+                funcOutputLog("等待开启查询。", "状态");
+            }
         }
 
         private void menuClearCmd_Click(object sender, EventArgs e)
