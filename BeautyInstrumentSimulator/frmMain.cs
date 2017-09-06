@@ -29,6 +29,25 @@ namespace BeautyInstrumentSimulator
 
         private void frmMain_Shown(object sender, EventArgs e)
         {
+            //加载报文配置
+            Cmd.LoadCmd();
+            menuShowLogCmd.Checked = Cmd.C_SHOW_LOG == "TRUE" ? true : false;
+            menuShowRcvData.Checked = Cmd.C_SHOW_RCV == "TRUE" ? true : false;
+            menuShowSendData.Checked = Cmd.C_SHOW_SEND == "TRUE" ? true : false;
+            menuShowCmdHead.Checked = Cmd.C_SHOW_HEAD == "TRUE" ? true : false;
+            menuShowCmdTime.Checked = Cmd.C_SHOW_TIME == "TRUE" ? true : false;
+            FontConverter fc = new FontConverter();
+            try
+            {
+                rtCmd.Font = (Font)fc.ConvertFromInvariantString(Cmd.C_FONT);
+            }
+            catch (NotSupportedException)
+            {
+                Cmd.C_FONT = fc.ConvertToInvariantString(rtCmd.Font);
+                Console.WriteLine("读取字体异常，已恢复：" + Cmd.C_FONT);
+                throw;
+            }
+
             //界面初始化
             cbRH.SelectedIndex = 0;
             cbAPP.SelectedIndex = 0;
@@ -43,6 +62,9 @@ namespace BeautyInstrumentSimulator
 
             rtCmd.Clear();
             funcOutputLog("准备就绪，等待串口开启。");
+
+            //打开串口
+            funcOpenSerialPort();
         }
 
         private void rtCmd_TextChanged(object sender, EventArgs e)
@@ -66,7 +88,8 @@ namespace BeautyInstrumentSimulator
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if(this.DialogResult != DialogResult.OK)
+            funcSaveConfig();
+            if (this.DialogResult != DialogResult.OK)
             {
                 System.Environment.Exit(0);
             }
@@ -74,6 +97,7 @@ namespace BeautyInstrumentSimulator
 
         private void btnEnd_Click(object sender, EventArgs e)
         {
+            funcSaveConfig();
             System.Environment.Exit(0);
         }
 
@@ -200,7 +224,7 @@ namespace BeautyInstrumentSimulator
                         {
                             byteBuffer[ii] = Convert.ToByte(decNum);
                         }
-                        catch (System.Exception ex)
+                        catch (System.Exception)
                         {
                             funcOutputLog("【发送出错】字节越界，请逐个字节输入！", "错误");
                             return;
@@ -321,6 +345,20 @@ namespace BeautyInstrumentSimulator
         {
             timUart.Enabled = false;
             btnOpenFind.Text = "开启查询";
+        }
+
+        public void funcSaveConfig()
+        {
+            //报文配置
+            Cmd.C_SHOW_HEAD = menuShowCmdHead.Checked ? "TRUE" : "FALSE";
+            Cmd.C_SHOW_TIME = menuShowCmdTime.Checked ? "TRUE" : "FALSE";
+            Cmd.C_SHOW_LOG = menuShowLogCmd.Checked ? "TRUE" : "FALSE";
+            Cmd.C_SHOW_SEND = menuShowSendData.Checked ? "TRUE" : "FALSE";
+            Cmd.C_SHOW_RCV = menuShowRcvData.Checked ? "TRUE" : "FALSE";
+            FontConverter fc = new FontConverter();
+            Cmd.C_FONT = fc.ConvertToInvariantString(rtCmd.Font);
+            Cmd.SaveCmd();
+
         }
 
         public void funcOutputLog(string strLog,string strHead = "提示")
@@ -636,5 +674,14 @@ namespace BeautyInstrumentSimulator
             }
         }
 
+        private void menuFontCmd_Click(object sender, EventArgs e)
+        {
+            FontDialog font = new FontDialog();
+            font.Font = rtCmd.Font;
+            if(font.ShowDialog() == DialogResult.OK)
+            {
+                rtCmd.Font = font.Font;
+            }
+        }
     }
 }

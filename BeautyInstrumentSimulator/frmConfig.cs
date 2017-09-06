@@ -23,6 +23,7 @@ namespace BeautyInstrumentSimulator
         //初始化
         private void frmConfig_Load_1(object sender, EventArgs e)
         {
+            FormMain = new frmMain();
             INIFILE.Profile.LoadProfile();//加载所有
 
             // 预置波特率
@@ -161,11 +162,7 @@ namespace BeautyInstrumentSimulator
             if (SerialPort.GetPortNames().Length == 0)
             {
                 MessageBox.Show("请连接串口设备！", "Error");
-                return;
             }
-
-            FormMain = new frmMain();
-
         }
 
         private void btnOK_Click(object sender, EventArgs e)
