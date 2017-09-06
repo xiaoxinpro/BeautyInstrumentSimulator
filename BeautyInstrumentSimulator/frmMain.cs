@@ -140,8 +140,16 @@ namespace BeautyInstrumentSimulator
                 byte[] byteRead = new byte[sp1.BytesToRead];    //BytesToRead:sp1接收的字符个数
                 if (Profile.G_DATA_RCVSTR == "TRUE")            //接收字符串格式
                 {
-                    strTextBuff += sp1.ReadLine();
-                    sp1.DiscardInBuffer();                      //清空SerialPort控件的Buffer 
+                    try
+                    {
+                        strTextBuff += sp1.ReadLine();
+                        sp1.DiscardInBuffer();                  //清空SerialPort控件的Buffer 
+                    }
+                    catch (System.Exception ex)
+                    {
+                        funcOutputLog("【接收出错】" + ex.Message, "错误");
+                        return;
+                    }
                 }
                 else                                            //接收16进制格式
                 {
@@ -634,7 +642,7 @@ namespace BeautyInstrumentSimulator
             tsBaudRate.Text = "波特率：" + Profile.G_BAUDRATE + " ";
             if(打开端口ToolStripMenuItem.Text == "打开串口")
             {
-                funcOutputLog("等待串口打开。", "状态");
+                funcOutputLog("串口" + Profile.StrPortName + "已经关闭", "状态");
             }
             else if(btnOpenFind.Text == "开启查询")
             {
