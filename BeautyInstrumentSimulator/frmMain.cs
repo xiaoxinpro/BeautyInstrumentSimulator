@@ -16,6 +16,7 @@ namespace BeautyInstrumentSimulator
     public partial class frmMain : Form
     {
         public SerialPort sp1 = new SerialPort();
+        frmFunction FormFunction = new frmFunction();
         frmAbout FormAbout = new frmAbout();
 
         public frmMain()
@@ -81,6 +82,11 @@ namespace BeautyInstrumentSimulator
             this.DialogResult = DialogResult.OK;
         }
 
+        private void menuFunction_Click(object sender, EventArgs e)
+        {
+            FormFunction.Show();
+        }
+
         private void 关于ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FormAbout.Show();
@@ -103,7 +109,7 @@ namespace BeautyInstrumentSimulator
 
         private void 打开端口ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (打开端口ToolStripMenuItem.Text == "打开串口")
+            if (menuOpenSerial.Text == "打开串口")
             {
                 //打开串口
                 funcOpenSerialPort();
@@ -299,7 +305,7 @@ namespace BeautyInstrumentSimulator
                         sp1.Close();
                     }
                     sp1.Open();     //打开串口
-                    打开端口ToolStripMenuItem.Text = "关闭串口";
+                    menuOpenSerial.Text = "关闭串口";
                     tsSerial.Text = "串口：" + Profile.StrPortName;
                     funcOutputLog("串口" + Profile.StrPortName + "已经开启");
                     btnOpenFind.Enabled = true;
@@ -310,7 +316,7 @@ namespace BeautyInstrumentSimulator
                     MessageBox.Show(ex.Message + "\r\n请重新连接串口设备或点击串口设置重新选择串口", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     btnOpenFind.Enabled = false;
                     funcCloseUart();
-                    打开端口ToolStripMenuItem.Text = "打开串口";
+                    menuOpenSerial.Text = "打开串口";
                     tsSerial.Text = "串口：关闭   ";
                     return;
                 }
@@ -325,7 +331,7 @@ namespace BeautyInstrumentSimulator
         {
             btnOpenFind.Enabled = false;
             funcCloseUart();
-            打开端口ToolStripMenuItem.Text = "打开串口";
+            menuOpenSerial.Text = "打开串口";
             funcOutputLog("串口" + Profile.StrPortName + "已经关闭");
             tsSerial.Text = "串口：关闭   ";
 
@@ -640,7 +646,7 @@ namespace BeautyInstrumentSimulator
         {
             tsTime.Text =  DateTime.Now.ToString() + " ";
             tsBaudRate.Text = "波特率：" + Profile.G_BAUDRATE + " ";
-            if(打开端口ToolStripMenuItem.Text == "打开串口")
+            if(menuOpenSerial.Text == "打开串口")
             {
                 funcOutputLog("串口" + Profile.StrPortName + "已经关闭", "状态");
             }
@@ -706,5 +712,6 @@ namespace BeautyInstrumentSimulator
                 rtCmd.Font = font.Font;
             }
         }
+
     }
 }
