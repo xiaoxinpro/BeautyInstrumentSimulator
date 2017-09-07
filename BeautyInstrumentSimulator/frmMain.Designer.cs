@@ -188,28 +188,28 @@
             this.menuAbout});
             this.menuMain.Location = new System.Drawing.Point(0, 0);
             this.menuMain.Name = "menuMain";
-            this.menuMain.Size = new System.Drawing.Size(1054, 42);
+            this.menuMain.Size = new System.Drawing.Size(1054, 39);
             this.menuMain.TabIndex = 2;
             this.menuMain.Text = "menuStrip1";
             // 
             // menuOpenSerial
             // 
             this.menuOpenSerial.Name = "menuOpenSerial";
-            this.menuOpenSerial.Size = new System.Drawing.Size(122, 38);
+            this.menuOpenSerial.Size = new System.Drawing.Size(122, 35);
             this.menuOpenSerial.Text = "打开串口";
             this.menuOpenSerial.Click += new System.EventHandler(this.打开端口ToolStripMenuItem_Click);
             // 
             // menuSerial
             // 
             this.menuSerial.Name = "menuSerial";
-            this.menuSerial.Size = new System.Drawing.Size(122, 38);
+            this.menuSerial.Size = new System.Drawing.Size(122, 35);
             this.menuSerial.Text = "串口设置";
             this.menuSerial.Click += new System.EventHandler(this.设置ToolStripMenuItem_Click);
             // 
             // menuFunction
             // 
             this.menuFunction.Name = "menuFunction";
-            this.menuFunction.Size = new System.Drawing.Size(122, 38);
+            this.menuFunction.Size = new System.Drawing.Size(122, 35);
             this.menuFunction.Text = "功能设置";
             this.menuFunction.Click += new System.EventHandler(this.menuFunction_Click);
             // 
@@ -229,7 +229,7 @@
             this.menuOutputCmd,
             this.menuSaveCmd});
             this.menuCmd.Name = "menuCmd";
-            this.menuCmd.Size = new System.Drawing.Size(74, 38);
+            this.menuCmd.Size = new System.Drawing.Size(74, 35);
             this.menuCmd.Text = "报文";
             // 
             // menuClearCmd
@@ -323,7 +323,7 @@
             // menuAbout
             // 
             this.menuAbout.Name = "menuAbout";
-            this.menuAbout.Size = new System.Drawing.Size(74, 38);
+            this.menuAbout.Size = new System.Drawing.Size(74, 35);
             this.menuAbout.Text = "关于";
             this.menuAbout.Click += new System.EventHandler(this.关于ToolStripMenuItem_Click);
             // 
@@ -438,6 +438,7 @@
             // 
             // txtRcvVersion
             // 
+            this.txtRcvVersion.Enabled = false;
             this.txtRcvVersion.Font = new System.Drawing.Font("微软雅黑", 7.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.txtRcvVersion.Location = new System.Drawing.Point(116, 536);
             this.txtRcvVersion.Name = "txtRcvVersion";
@@ -447,6 +448,7 @@
             // 
             // txtRcvRhH
             // 
+            this.txtRcvRhH.Enabled = false;
             this.txtRcvRhH.Font = new System.Drawing.Font("微软雅黑", 7.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.txtRcvRhH.Location = new System.Drawing.Point(116, 485);
             this.txtRcvRhH.Name = "txtRcvRhH";
@@ -456,6 +458,7 @@
             // 
             // txtRcvAdjust
             // 
+            this.txtRcvAdjust.Enabled = false;
             this.txtRcvAdjust.Font = new System.Drawing.Font("微软雅黑", 7.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.txtRcvAdjust.Location = new System.Drawing.Point(116, 128);
             this.txtRcvAdjust.Name = "txtRcvAdjust";
@@ -465,6 +468,7 @@
             // 
             // txtRcvThTemp
             // 
+            this.txtRcvThTemp.Enabled = false;
             this.txtRcvThTemp.Font = new System.Drawing.Font("微软雅黑", 7.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.txtRcvThTemp.Location = new System.Drawing.Point(117, 434);
             this.txtRcvThTemp.Name = "txtRcvThTemp";
@@ -474,6 +478,7 @@
             // 
             // txtRcvHotTemp
             // 
+            this.txtRcvHotTemp.Enabled = false;
             this.txtRcvHotTemp.Font = new System.Drawing.Font("微软雅黑", 7.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.txtRcvHotTemp.Location = new System.Drawing.Point(117, 383);
             this.txtRcvHotTemp.Name = "txtRcvHotTemp";
@@ -483,6 +488,7 @@
             // 
             // txtRcvRh3
             // 
+            this.txtRcvRh3.Enabled = false;
             this.txtRcvRh3.Font = new System.Drawing.Font("微软雅黑", 7.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.txtRcvRh3.Location = new System.Drawing.Point(117, 332);
             this.txtRcvRh3.Name = "txtRcvRh3";
@@ -492,6 +498,7 @@
             // 
             // txtRcvRh2
             // 
+            this.txtRcvRh2.Enabled = false;
             this.txtRcvRh2.Font = new System.Drawing.Font("微软雅黑", 7.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.txtRcvRh2.Location = new System.Drawing.Point(117, 281);
             this.txtRcvRh2.Name = "txtRcvRh2";
@@ -501,6 +508,7 @@
             // 
             // txtRcvRh1
             // 
+            this.txtRcvRh1.Enabled = false;
             this.txtRcvRh1.Font = new System.Drawing.Font("微软雅黑", 7.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.txtRcvRh1.Location = new System.Drawing.Point(117, 230);
             this.txtRcvRh1.Name = "txtRcvRh1";
@@ -510,6 +518,7 @@
             // 
             // txtRcvTime
             // 
+            this.txtRcvTime.Enabled = false;
             this.txtRcvTime.Font = new System.Drawing.Font("微软雅黑", 7.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.txtRcvTime.Location = new System.Drawing.Point(117, 179);
             this.txtRcvTime.Name = "txtRcvTime";
@@ -519,6 +528,7 @@
             // 
             // txtRcvMode
             // 
+            this.txtRcvMode.Enabled = false;
             this.txtRcvMode.Font = new System.Drawing.Font("微软雅黑", 7.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.txtRcvMode.Location = new System.Drawing.Point(116, 77);
             this.txtRcvMode.Name = "txtRcvMode";
@@ -528,6 +538,7 @@
             // 
             // txtRcvStatus
             // 
+            this.txtRcvStatus.Enabled = false;
             this.txtRcvStatus.Font = new System.Drawing.Font("微软雅黑", 7.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.txtRcvStatus.Location = new System.Drawing.Point(116, 26);
             this.txtRcvStatus.Name = "txtRcvStatus";

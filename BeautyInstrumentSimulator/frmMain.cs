@@ -123,7 +123,7 @@ namespace BeautyInstrumentSimulator
 
         private void btnOpenFind_Click(object sender, EventArgs e)
         {
-            if(btnOpenFind.Text == "开启查询")
+            if (btnOpenFind.Text == "开启查询")
             {
                 //打开自动发送数据
                 funcOpenUart();
@@ -165,6 +165,10 @@ namespace BeautyInstrumentSimulator
                         sp1.Read(receivedData, 0, receivedData.Length);         //读取数据
                         RcvDataProcess(receivedData);                           //接收数据处理
                         sp1.DiscardInBuffer();                                  //清空SerialPort控件的Buffer
+                        if(receivedData.Length <= 0)
+                        {
+                            return;
+                        }
                         string strRcv = null;
                         for (int i = 0; i < receivedData.Length; i++)
                         {
@@ -267,7 +271,7 @@ namespace BeautyInstrumentSimulator
             {
                 try
                 {
-                    sp1.PortName = Profile.StrPortName;
+                    sp1.PortName = Profile.G_PORTNAME;
                     sp1.BaudRate = Convert.ToInt32(Profile.G_BAUDRATE);
                     sp1.DataBits = Convert.ToInt32(Profile.G_DATABITS);
                     switch (Profile.G_STOP)
@@ -306,8 +310,8 @@ namespace BeautyInstrumentSimulator
                     }
                     sp1.Open();     //打开串口
                     menuOpenSerial.Text = "关闭串口";
-                    tsSerial.Text = "串口：" + Profile.StrPortName;
-                    funcOutputLog("串口" + Profile.StrPortName + "已经开启");
+                    tsSerial.Text = "串口：" + Profile.G_PORTNAME;
+                    funcOutputLog("串口" + Profile.G_PORTNAME + "已经开启");
                     btnOpenFind.Enabled = true;
                     funcCloseUart();
                 }
@@ -332,7 +336,7 @@ namespace BeautyInstrumentSimulator
             btnOpenFind.Enabled = false;
             funcCloseUart();
             menuOpenSerial.Text = "打开串口";
-            funcOutputLog("串口" + Profile.StrPortName + "已经关闭");
+            funcOutputLog("串口" + Profile.G_PORTNAME + "已经关闭");
             tsSerial.Text = "串口：关闭   ";
 
             try
@@ -364,6 +368,8 @@ namespace BeautyInstrumentSimulator
 
         public void funcCloseUart()
         {
+            cbAPP.SelectedIndex = 0;
+            cbRH.SelectedIndex = 0;
             timUart.Enabled = false;
             btnOpenFind.Text = "开启查询";
         }
@@ -648,7 +654,7 @@ namespace BeautyInstrumentSimulator
             tsBaudRate.Text = "波特率：" + Profile.G_BAUDRATE + " ";
             if(menuOpenSerial.Text == "打开串口")
             {
-                funcOutputLog("串口" + Profile.StrPortName + "已经关闭", "状态");
+                funcOutputLog("串口" + Profile.G_PORTNAME + "已经关闭", "状态");
             }
             else if(btnOpenFind.Text == "开启查询")
             {

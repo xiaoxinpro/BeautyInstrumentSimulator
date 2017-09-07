@@ -224,13 +224,18 @@ namespace BeautyInstrumentSimulator
                 cbSerial.Items.Clear();
 
                 //添加串口项目
+                int defaultPortNameItem = 0;
                 foreach (string s in arrSerialPortNames)
                 {
                     cbSerial.Items.Add(s);
+                    if ((SerialList.Count == 0)&&(s == Profile.G_PORTNAME))
+                    {
+                        defaultPortNameItem = cbSerial.Items.Count - 1;
+                    }
                 }
 
                 //串口设置默认选择项
-                cbSerial.SelectedIndex = 0;
+                cbSerial.SelectedIndex = defaultPortNameItem;
                 btnSwitch.Enabled = true;
                 btnOK.Enabled = true;
             }
@@ -259,7 +264,7 @@ namespace BeautyInstrumentSimulator
             string strStopBits = cbStop.Text;
             Int32 iBaudRate = Convert.ToInt32(strBaudRate);
             Int32 iDateBits = Convert.ToInt32(strDateBits);
-            Profile.StrPortName = cbSerial.Text;
+            Profile.G_PORTNAME = cbSerial.Text;        //串口名
             Profile.G_BAUDRATE = iBaudRate + "";       //波特率
             Profile.G_DATABITS = iDateBits + "";       //数据位
             switch (cbStop.Text)            //停止位
