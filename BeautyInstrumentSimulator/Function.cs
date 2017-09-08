@@ -15,6 +15,10 @@ namespace INIFILE
             F_TICKTIME = _file.ReadString("FUNCTION", "TickTime", "500");
             F_DATA_SEND = _file.ReadString("FUNCTION", "DataSend", "NULL");
             F_DATA_RCV = _file.ReadString("FUNCTION", "DataRcv", "NULL");
+            F_MAIN_HEIGHT = _file.ReadString("FUNCTION", "MainHeight", "0");
+            F_MAIN_WIDTH = _file.ReadString("FUNCTION", "MainWidth", "0");
+            F_MAIN_X = _file.ReadString("FUNCTION", "MainX", "NULL");
+            F_MAIN_Y = _file.ReadString("FUNCTION", "MainY", "NULL");
         }
 
         public static void SaveFunction()
@@ -25,6 +29,10 @@ namespace INIFILE
             _file.WriteString("FUNCTION", "TickTime", F_TICKTIME);
             _file.WriteString("FUNCTION", "DataSend", F_DATA_SEND);
             _file.WriteString("FUNCTION", "DataRcv", F_DATA_RCV);
+            _file.WriteString("FUNCTION", "MainHeight", F_MAIN_HEIGHT);
+            _file.WriteString("FUNCTION", "MainWidth", F_MAIN_WIDTH);
+            _file.WriteString("FUNCTION", "MainX", F_MAIN_X);
+            _file.WriteString("FUNCTION", "MainY", F_MAIN_Y);
         }
 
         private static IniFile _file;
@@ -33,7 +41,10 @@ namespace INIFILE
         public static string F_TICKTIME = "500";
         public static string F_DATA_SEND = "NULL";
         public static string F_DATA_RCV = "NULL";
-
+        public static string F_MAIN_HEIGHT = "0";
+        public static string F_MAIN_WIDTH = "0";
+        public static string F_MAIN_X = "NULL";
+        public static string F_MAIN_Y = "NULL";
     }
 }
 

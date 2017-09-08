@@ -50,6 +50,25 @@ namespace BeautyInstrumentSimulator
             }
 
             //界面初始化
+            Function.LoadFunction();
+            if (((Function.F_MAIN_X) != "NULL") && ((Function.F_MAIN_Y) != "NULL")) 
+            {
+                int left = Convert.ToInt32(Function.F_MAIN_X);
+                int top = Convert.ToInt32(Function.F_MAIN_Y);
+                if (left >= 0 && top >= 0) 
+                {
+                    this.Left = left;
+                    this.Top = top;
+                    if(Convert.ToInt32(Function.F_MAIN_WIDTH) >= this.MinimumSize.Width)
+                    {
+                        this.Width = Convert.ToInt32(Function.F_MAIN_WIDTH);
+                    }
+                    if (Convert.ToInt32(Function.F_MAIN_HEIGHT) >= this.MinimumSize.Height)
+                    {
+                        this.Height = Convert.ToInt32(Function.F_MAIN_HEIGHT);
+                    }
+                }
+            }
             cbRH.SelectedIndex = 0;
             cbAPP.SelectedIndex = 0;
 
@@ -321,7 +340,7 @@ namespace BeautyInstrumentSimulator
                     btnOpenFind.Enabled = false;
                     funcCloseUart();
                     menuOpenSerial.Text = "打开串口";
-                    tsSerial.Text = "串口：关闭   ";
+                    tsSerial.Text = "串口：关闭";
                     return;
                 }
             }
@@ -337,7 +356,7 @@ namespace BeautyInstrumentSimulator
             funcCloseUart();
             menuOpenSerial.Text = "打开串口";
             funcOutputLog("串口" + Profile.G_PORTNAME + "已经关闭");
-            tsSerial.Text = "串口：关闭   ";
+            tsSerial.Text = "串口：关闭";
 
             try
             {
@@ -386,6 +405,12 @@ namespace BeautyInstrumentSimulator
             Cmd.C_FONT = fc.ConvertToInvariantString(rtCmd.Font);
             Cmd.SaveCmd();
 
+            //功能配置
+            Function.F_MAIN_HEIGHT = Convert.ToString(this.Height);
+            Function.F_MAIN_WIDTH = Convert.ToString(this.Width);
+            Function.F_MAIN_X = Convert.ToString(this.Location.X);
+            Function.F_MAIN_Y = Convert.ToString(this.Location.Y);
+            Function.SaveFunction();
         }
 
         public void funcOutputLog(string strLog,string strHead = "提示")

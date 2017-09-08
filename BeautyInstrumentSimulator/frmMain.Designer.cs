@@ -179,7 +179,6 @@
             // 
             // menuMain
             // 
-            this.menuMain.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.menuMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuOpenSerial,
             this.menuSerial,
@@ -188,7 +187,7 @@
             this.menuAbout});
             this.menuMain.Location = new System.Drawing.Point(0, 0);
             this.menuMain.Name = "menuMain";
-            this.menuMain.Size = new System.Drawing.Size(1054, 39);
+            this.menuMain.Size = new System.Drawing.Size(1054, 42);
             this.menuMain.TabIndex = 2;
             this.menuMain.Text = "menuStrip1";
             // 
@@ -235,21 +234,21 @@
             // menuClearCmd
             // 
             this.menuClearCmd.Name = "menuClearCmd";
-            this.menuClearCmd.Size = new System.Drawing.Size(268, 38);
+            this.menuClearCmd.Size = new System.Drawing.Size(256, 38);
             this.menuClearCmd.Text = "清空报文";
             this.menuClearCmd.Click += new System.EventHandler(this.menuClearCmd_Click);
             // 
             // menuFontCmd
             // 
             this.menuFontCmd.Name = "menuFontCmd";
-            this.menuFontCmd.Size = new System.Drawing.Size(268, 38);
+            this.menuFontCmd.Size = new System.Drawing.Size(256, 38);
             this.menuFontCmd.Text = "报文样式";
             this.menuFontCmd.Click += new System.EventHandler(this.menuFontCmd_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(265, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(253, 6);
             // 
             // menuShowLogCmd
             // 
@@ -257,7 +256,7 @@
             this.menuShowLogCmd.CheckOnClick = true;
             this.menuShowLogCmd.CheckState = System.Windows.Forms.CheckState.Checked;
             this.menuShowLogCmd.Name = "menuShowLogCmd";
-            this.menuShowLogCmd.Size = new System.Drawing.Size(268, 38);
+            this.menuShowLogCmd.Size = new System.Drawing.Size(256, 38);
             this.menuShowLogCmd.Text = "显示提示信息";
             // 
             // menuShowSendData
@@ -266,7 +265,7 @@
             this.menuShowSendData.CheckOnClick = true;
             this.menuShowSendData.CheckState = System.Windows.Forms.CheckState.Checked;
             this.menuShowSendData.Name = "menuShowSendData";
-            this.menuShowSendData.Size = new System.Drawing.Size(268, 38);
+            this.menuShowSendData.Size = new System.Drawing.Size(256, 38);
             this.menuShowSendData.Text = "显示发送数据";
             // 
             // menuShowRcvData
@@ -275,13 +274,13 @@
             this.menuShowRcvData.CheckOnClick = true;
             this.menuShowRcvData.CheckState = System.Windows.Forms.CheckState.Checked;
             this.menuShowRcvData.Name = "menuShowRcvData";
-            this.menuShowRcvData.Size = new System.Drawing.Size(268, 38);
+            this.menuShowRcvData.Size = new System.Drawing.Size(256, 38);
             this.menuShowRcvData.Text = "显示接收数据";
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(265, 6);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(253, 6);
             // 
             // menuShowCmdTime
             // 
@@ -289,7 +288,7 @@
             this.menuShowCmdTime.CheckOnClick = true;
             this.menuShowCmdTime.CheckState = System.Windows.Forms.CheckState.Checked;
             this.menuShowCmdTime.Name = "menuShowCmdTime";
-            this.menuShowCmdTime.Size = new System.Drawing.Size(268, 38);
+            this.menuShowCmdTime.Size = new System.Drawing.Size(256, 38);
             this.menuShowCmdTime.Text = "显示报文时间";
             // 
             // menuShowCmdHead
@@ -298,25 +297,25 @@
             this.menuShowCmdHead.CheckOnClick = true;
             this.menuShowCmdHead.CheckState = System.Windows.Forms.CheckState.Checked;
             this.menuShowCmdHead.Name = "menuShowCmdHead";
-            this.menuShowCmdHead.Size = new System.Drawing.Size(268, 38);
+            this.menuShowCmdHead.Size = new System.Drawing.Size(256, 38);
             this.menuShowCmdHead.Text = "显示报文头";
             // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(265, 6);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(253, 6);
             // 
             // menuOutputCmd
             // 
             this.menuOutputCmd.Name = "menuOutputCmd";
-            this.menuOutputCmd.Size = new System.Drawing.Size(268, 38);
+            this.menuOutputCmd.Size = new System.Drawing.Size(256, 38);
             this.menuOutputCmd.Text = "动态输出";
             this.menuOutputCmd.Click += new System.EventHandler(this.menuOutputCmd_Click);
             // 
             // menuSaveCmd
             // 
             this.menuSaveCmd.Name = "menuSaveCmd";
-            this.menuSaveCmd.Size = new System.Drawing.Size(268, 38);
+            this.menuSaveCmd.Size = new System.Drawing.Size(256, 38);
             this.menuSaveCmd.Text = "保存报文";
             this.menuSaveCmd.Click += new System.EventHandler(this.menuSaveCmd_Click);
             // 
@@ -343,13 +342,12 @@
             // 
             // tsSerial
             // 
-            this.tsSerial.AutoSize = false;
             this.tsSerial.AutoToolTip = true;
             this.tsSerial.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
             this.tsSerial.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.tsSerial.Name = "tsSerial";
-            this.tsSerial.Size = new System.Drawing.Size(90, 35);
-            this.tsSerial.Text = "串口：关闭   ";
+            this.tsSerial.Size = new System.Drawing.Size(138, 35);
+            this.tsSerial.Text = "串口：关闭";
             this.tsSerial.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // tsBaudRate
