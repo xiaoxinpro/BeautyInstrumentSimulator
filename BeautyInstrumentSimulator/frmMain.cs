@@ -387,8 +387,8 @@ namespace BeautyInstrumentSimulator
 
         public void funcCloseUart()
         {
-            cbAPP.SelectedIndex = 0;
-            cbRH.SelectedIndex = 0;
+            //cbAPP.SelectedIndex = 0;
+            //cbRH.SelectedIndex = 0;
             timUart.Enabled = false;
             btnOpenFind.Text = "开启查询";
         }
@@ -520,9 +520,17 @@ namespace BeautyInstrumentSimulator
                         {
                             txtRcvMode.Text = "水份检测";
                             txtRcvAdjust.Text = "无";
+                            if(!cbRH.DroppedDown && cbRH.SelectedIndex != 1)
+                            {
+                                cbRH.SelectedIndex = 1;
+                            }
                         }
                         else
                         {
+                            if (!cbRH.DroppedDown && cbRH.SelectedIndex != 0)
+                            {
+                                cbRH.SelectedIndex = 0;
+                            }
                             string strMode = "无";
                             string strAdjust = "无"; 
                             if(Uart.isBinTest(byteBuff[5], 0))
@@ -593,8 +601,17 @@ namespace BeautyInstrumentSimulator
         private static byte byteSendDataRH = 0x00;
         private void cbRH_SelectionChangeCommitted(object sender, EventArgs e)
         {
+
+        }
+
+        private void cbRH_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbRH.DroppedDown)
+            {
+                return;
+            }
             byte tmp = 0x00;
-            if(cbRH.SelectedIndex == 1)
+            if (cbRH.SelectedIndex == 1)
             {
                 tmp = 0x08;
             }
@@ -602,7 +619,7 @@ namespace BeautyInstrumentSimulator
             {
                 tmp = 0x00;
             }
-            if (tmp != byteSendDataRH) 
+            if (tmp != byteSendDataRH)
             {
                 isSendDataChange = true;
                 byteSendDataRH = tmp;
@@ -743,6 +760,7 @@ namespace BeautyInstrumentSimulator
                 rtCmd.Font = font.Font;
             }
         }
+
 
     }
 }

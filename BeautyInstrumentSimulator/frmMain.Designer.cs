@@ -118,6 +118,7 @@
             this.cbRH.Name = "cbRH";
             this.cbRH.Size = new System.Drawing.Size(100, 39);
             this.cbRH.TabIndex = 2;
+            this.cbRH.SelectedIndexChanged += new System.EventHandler(this.cbRH_SelectedIndexChanged);
             this.cbRH.SelectionChangeCommitted += new System.EventHandler(this.cbRH_SelectionChangeCommitted);
             // 
             // cbAPP
@@ -187,7 +188,7 @@
             this.menuAbout});
             this.menuMain.Location = new System.Drawing.Point(0, 0);
             this.menuMain.Name = "menuMain";
-            this.menuMain.Size = new System.Drawing.Size(1054, 42);
+            this.menuMain.Size = new System.Drawing.Size(1054, 39);
             this.menuMain.TabIndex = 2;
             this.menuMain.Text = "menuStrip1";
             // 
