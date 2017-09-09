@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Beauty Instrument Simulator")]
 [assembly: AssemblyDescription("Beauty Instrument Simulator是一款基于C#开发的串口模拟工具，用于模拟蓝牙采集硬件数据，需要与Beauty Instrument硬件设备通过串口连接。该工具具有串口调试助手的全部功能，额外增加了Beauty Instrument设备的通信协议，可模拟蓝牙及APP的相关通信，目的是方便Beauty Instrument硬件开发与调试。")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("www.xxgzs.org")]
+[assembly: AssemblyCompany("http://www.xxgzs.org")]
 [assembly: AssemblyProduct("Beauty Instrument Simulator")]
 [assembly: AssemblyCopyright("Copyright © Chishin 2017")]
 [assembly: AssemblyTrademark("")]
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.0.0.1")]
-[assembly: AssemblyFileVersion("0.0.0.1")]
+[assembly: AssemblyVersion("0.1.26")]
+[assembly: AssemblyFileVersion("0.1.26")]
