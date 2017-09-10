@@ -33,4 +33,6 @@ Beauty Instrument Simulator连续6次接收不到Beauty Instrument的命令帧�
 
 最新测试版：[BeautyInstrumentSimulator.exe](https://raw.githubusercontent.com/xiaoxinpro/BeautyInstrumentSimulator/master/BeautyInstrumentSimulator/bin/Debug/BeautyInstrumentSimulator.exe)
 
+NET3.5版本：[BeautyInstrumentSimulator for NET3.5.exe](https://raw.githubusercontent.com/xiaoxinpro/BeautyInstrumentSimulator/NET3.5/BeautyInstrumentSimulator/bin/Debug/BeautyInstrumentSimulator.exe)
+
 

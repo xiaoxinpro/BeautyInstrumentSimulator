@@ -688,6 +688,16 @@ namespace BeautyInstrumentSimulator
                 intCharNum = 1;
             }
             funcOutputLog("串口通信中" + new string('.', intCharNum), "状态");
+
+            //检查发送周期是否变化
+            if(timUart.Interval != Convert.ToInt32(Function.F_TICKTIME))
+            {
+                int time = Convert.ToInt32(Function.F_TICKTIME);
+                if(time >= 10 && time <= 10000)
+                {
+                    timUart.Interval = time;
+                }
+            }
         }
 
         private void timTime_Tick(object sender, EventArgs e)

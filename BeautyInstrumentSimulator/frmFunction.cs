@@ -27,11 +27,16 @@ namespace BeautyInstrumentSimulator
         {
             e.Cancel = true;
             this.Hide();
-            Function.SaveFunction();
+            funcFunctionSaveData();
+            Console.WriteLine("检测到关闭窗体");
         }
 
         private void txtTickTime_KeyPress(object sender, KeyPressEventArgs e)
         {
+            if(e.KeyChar == '\r')
+            {
+                this.Close();
+            }
             if (e.KeyChar != '\b')//这是允许输入退格键  
             {
                 if ((e.KeyChar < '0') || (e.KeyChar > '9'))//这是允许输入0-9数字  
@@ -55,6 +60,13 @@ namespace BeautyInstrumentSimulator
             {
                 txtTickTime.Text = "10000";
             }
+        }
+
+        private void funcFunctionSaveData()
+        {
+            txtTickTime_Validated(null, null);
+            Function.F_TICKTIME = txtTickTime.Text;
+            Function.SaveFunction();
         }
     }
 }
