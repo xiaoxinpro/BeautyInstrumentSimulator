@@ -688,21 +688,14 @@ namespace BeautyInstrumentSimulator
                 intCharNum = 1;
             }
             funcOutputLog("串口通信中" + new string('.', intCharNum), "状态");
-
-            //检查发送周期是否变化
-            if(timUart.Interval != Convert.ToInt32(Function.F_TICKTIME))
-            {
-                int time = Convert.ToInt32(Function.F_TICKTIME);
-                if(time >= 10 && time <= 10000)
-                {
-                    timUart.Interval = time;
-                }
-            }
         }
 
         private void timTime_Tick(object sender, EventArgs e)
         {
+            //刷新时间显示
             tsTime.Text =  DateTime.Now.ToString() + " ";
+
+            //检测波特率和串口是否变化
             tsBaudRate.Text = "波特率：" + Profile.G_BAUDRATE + " ";
             if(menuOpenSerial.Text == "打开串口")
             {
@@ -711,6 +704,16 @@ namespace BeautyInstrumentSimulator
             else if(btnOpenFind.Text == "开启查询")
             {
                 funcOutputLog("等待开启查询。", "状态");
+            }
+
+            //检查发送周期是否变化
+            if (timUart.Interval != Convert.ToInt32(Function.F_TICKTIME))
+            {
+                int time = Convert.ToInt32(Function.F_TICKTIME);
+                if (time >= 10 && time <= 10000)
+                {
+                    timUart.Interval = time;
+                }
             }
         }
 
