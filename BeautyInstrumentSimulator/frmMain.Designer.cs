@@ -189,7 +189,7 @@
             this.menuAbout});
             this.menuMain.Location = new System.Drawing.Point(0, 0);
             this.menuMain.Name = "menuMain";
-            this.menuMain.Size = new System.Drawing.Size(1054, 42);
+            this.menuMain.Size = new System.Drawing.Size(1054, 39);
             this.menuMain.TabIndex = 2;
             this.menuMain.Text = "menuStrip1";
             // 
@@ -470,6 +470,7 @@
             this.txtRcvRhH.ReadOnly = true;
             this.txtRcvRhH.Size = new System.Drawing.Size(100, 35);
             this.txtRcvRhH.TabIndex = 1;
+            this.txtRcvRhH.TextChanged += new System.EventHandler(this.txtRcvRhH_TextChanged);
             // 
             // txtRcvAdjust
             // 

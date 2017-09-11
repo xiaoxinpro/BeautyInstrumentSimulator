@@ -486,7 +486,15 @@ namespace BeautyInstrumentSimulator
 
         private void RcvDataProcess(byte[] byteBuff)
         {
-            if(byteBuff.Length == 17)
+            if (byteBuff.Length == 4)
+            {
+                if ((byteBuff[0] == 0x22) && (byteBuff[1] == 0x02))
+                {
+                    //水份参数
+                    txtRcvRhH.Text = "0x" + byteBuff[2].ToString("X2") + byteBuff[3].ToString("X2");
+                }
+            }
+            else if (byteBuff.Length == 17)
             {
                 if ((byteBuff[0] == 0x22) && (byteBuff[1] == 0x0F) && (byteBuff[2] == 0xA5)) 
                 {
@@ -774,6 +782,9 @@ namespace BeautyInstrumentSimulator
             }
         }
 
-
+        private void txtRcvRhH_TextChanged(object sender, EventArgs e)
+        {
+            Console.WriteLine("水份检测参数："+txtRcvRhH.Text);
+        }
     }
 }
