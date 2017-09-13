@@ -21,6 +21,15 @@ namespace BeautyInstrumentSimulator
         {
             Function.LoadFunction();
             txtTickTime.Text = Function.F_TICKTIME;
+            if(Convert.ToInt32(Function.F_PROT_SEND) < cbProtocolSend.Items.Count)
+            {
+                cbProtocolSend.SelectedIndex = Convert.ToInt32(Function.F_PROT_SEND);
+            }
+            else
+            {
+                cbProtocolSend.SelectedIndex = 0;
+            }
+            
         }
 
         private void frmFunction_FormClosing(object sender, FormClosingEventArgs e)
@@ -66,6 +75,7 @@ namespace BeautyInstrumentSimulator
         {
             txtTickTime_Validated(null, null);
             Function.F_TICKTIME = txtTickTime.Text;
+            Function.F_PROT_SEND = Convert.ToString(cbProtocolSend.SelectedIndex);
             Function.SaveFunction();
         }
     }

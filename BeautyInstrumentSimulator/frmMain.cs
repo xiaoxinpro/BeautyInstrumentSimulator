@@ -496,9 +496,9 @@ namespace BeautyInstrumentSimulator
             }
             else if (byteBuff.Length == 17)
             {
-                if ((byteBuff[0] == 0x22) && (byteBuff[1] == 0x0F) && (byteBuff[2] == 0xA5)) 
+                if ((byteBuff[0] == 0x22) && (byteBuff[1] == 0x0F) && (byteBuff[2] == 0xA5))
                 {
-                    if(byteBuff[16] == Uart.byteCheakSum(byteBuff, 2, 14))
+                    if (byteBuff[16] == Uart.byteCheakSum(byteBuff, 2, 14))
                     {
                         //状态
                         switch (byteBuff[4])
@@ -528,7 +528,7 @@ namespace BeautyInstrumentSimulator
                         {
                             txtRcvMode.Text = "水份检测";
                             txtRcvAdjust.Text = "无";
-                            if(!cbRH.DroppedDown && cbRH.SelectedIndex != 1)
+                            if (!cbRH.DroppedDown && cbRH.SelectedIndex != 1)
                             {
                                 cbRH.SelectedIndex = 1;
                             }
@@ -540,8 +540,8 @@ namespace BeautyInstrumentSimulator
                                 cbRH.SelectedIndex = 0;
                             }
                             string strMode = "无";
-                            string strAdjust = "无"; 
-                            if(Uart.isBinTest(byteBuff[5], 0))
+                            string strAdjust = "无";
+                            if (Uart.isBinTest(byteBuff[5], 0))
                             {
                                 strAdjust = "弱";
                             }
@@ -595,7 +595,21 @@ namespace BeautyInstrumentSimulator
                         txtRcvRhH.Text = "0x" + byteBuff[12].ToString("X2") + byteBuff[13].ToString("X2");
 
                         //软件版本号
-                        txtRcvVersion.Text = "V"+byteBuff[15].ToString();
+                        txtRcvVersion.Text = "V" + byteBuff[15].ToString();
+                    }
+                    else
+                    {
+                        //检验和错误
+                    }
+                }
+            }
+            else if (byteBuff.Length == 28)
+            {
+                if ((byteBuff[0] == 0x22) && (byteBuff[1] == 26) && (byteBuff[2] == '$'))
+                {
+                    if (byteBuff[27] == Uart.byteCheakSum(byteBuff, 2, 25))
+                    {
+
                     }
                     else
                     {
@@ -666,30 +680,43 @@ namespace BeautyInstrumentSimulator
         private static int intCharNum = 0;
         private void timUart_Tick(object sender, EventArgs e)
         {
-            byte[] byteSendData = { 0x22, 0x06, 0xA5, 0x00, 0x00, 0x00, 0x01, 0x00 };
-            //设置命令帧类型
-            if (isSendDataChange)
+            if(Function.F_PROT_SEND == "0")
             {
-                isSendDataChange = false;
-                byteSendData[3] = 0x01;
-            }
+                byte[] byteSendData = { 0x22, 0x06, 0xA5, 0x00, 0x00, 0x00, 0x01, 0x00 };
+                //设置命令帧类型
+                if (isSendDataChange)
+                {
+                    isSendDataChange = false;
+                    byteSendData[3] = 0x01;
+                }
 
-            //设置APP状态
-            byteSendData[4] = byteSendDataAPP;
-            if (byteSendDataAPP != 0x00)
+                //设置APP状态
+                byteSendData[4] = byteSendDataAPP;
+                if (byteSendDataAPP != 0x00)
+                {
+                    byteSendDataAPP = 0x00;
+                    cbAPP.SelectedIndex = 0; // 复位APP状态
+                }
+
+                //设置水份检测开关
+                byteSendData[5] = byteSendDataRH;
+
+                //计算校验和
+                byteSendData[byteSendData.Length - 1] = Uart.byteCheakSum(byteSendData, 2, 5);
+
+                //发送数据
+                sp1_DataSend(Uart.byteToHexStr(byteSendData));
+
+            }
+            else if(Function.F_PROT_SEND == "1")
             {
-                byteSendDataAPP = 0x00;
-                cbAPP.SelectedIndex = 0; // 复位APP状态
+
             }
-
-            //设置水份检测开关
-            byteSendData[5] = byteSendDataRH;
-
-            //计算校验和
-            byteSendData[byteSendData.Length - 1] = Uart.byteCheakSum(byteSendData, 2, 5);
-
-            //发送数据
-            sp1_DataSend(Uart.byteToHexStr(byteSendData));
+            else
+            {
+                funcOutputLog("无法识别发送协议，请在功能设置中重新选择", "错误");
+                return;
+            }
 
             if (++intCharNum > 3)
             {

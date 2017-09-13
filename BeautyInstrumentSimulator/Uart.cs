@@ -67,6 +67,27 @@ namespace BeautyInstrumentSimulator
         }
 
         /// <summary>
+        /// 计算检验和（异或）
+        /// </summary>
+        /// <param name="bytes">检验数组</param>
+        /// <param name="start">校验起始位置</param>
+        /// <param name="length">校验长度</param>
+        /// <returns>校验和</returns>
+        public static byte byteCheckSum_xor(byte[] bytes, int start = 0, int length = 0)
+        {
+            byte sum = 0;
+            if (length == 0)
+            {
+                length = bytes.Length - start;
+            }
+            for (int i = start + 1; i < length + start; i++) 
+            {
+                sum ^= bytes[i];
+            }
+            return sum;
+        }
+
+        /// <summary>
         /// 检测二进制某一位
         /// </summary>
         /// <param name="Num">二进制数</param>

@@ -31,6 +31,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtTickTime = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.cbProtocolSend = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // label1
@@ -60,13 +62,36 @@
             this.label2.TabIndex = 2;
             this.label2.Text = "毫秒";
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(12, 107);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(204, 35);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "发送命令协议：";
+            // 
+            // cbProtocolSend
+            // 
+            this.cbProtocolSend.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbProtocolSend.FormattingEnabled = true;
+            this.cbProtocolSend.Items.AddRange(new object[] {
+            "协议01",
+            "协议02"});
+            this.cbProtocolSend.Location = new System.Drawing.Point(207, 104);
+            this.cbProtocolSend.Name = "cbProtocolSend";
+            this.cbProtocolSend.Size = new System.Drawing.Size(129, 43);
+            this.cbProtocolSend.TabIndex = 3;
+            // 
             // frmFunction
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(192F, 192F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(444, 123);
+            this.ClientSize = new System.Drawing.Size(444, 176);
+            this.Controls.Add(this.cbProtocolSend);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtTickTime);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("微软雅黑", 10F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -86,5 +111,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtTickTime;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ComboBox cbProtocolSend;
     }
 }
