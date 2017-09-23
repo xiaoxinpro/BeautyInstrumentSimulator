@@ -26,6 +26,8 @@ namespace BeautyInstrumentSimulator
             FormMain = new frmMain();
             INIFILE.Profile.LoadProfile();//加载所有
 
+            this.Height = btnOK.Location.Y + btnOK.Height + 40;
+
             // 预置波特率
             switch (Profile.G_BAUDRATE)
             {
