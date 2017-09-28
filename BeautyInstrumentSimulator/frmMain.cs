@@ -603,12 +603,78 @@ namespace BeautyInstrumentSimulator
                     }
                 }
             }
-            else if (byteBuff.Length == 28)
+            else if (byteBuff.Length == 14)
             {
-                if ((byteBuff[0] == 0x22) && (byteBuff[1] == 26) && (byteBuff[2] == '$'))
+                if ((byteBuff[0] == 0x22) && (byteBuff[1] == 12) && (byteBuff[2] == 0x52) && (byteBuff[3] == 0x02))
                 {
-                    if (byteBuff[27] == Uart.byteCheakSum(byteBuff, 2, 25))
+                    if (byteBuff[13] == Uart.byteCheakSum(byteBuff, 2, byteBuff[1]))
                     {
+                        if(byteBuff[5] == 0x03)
+                        {
+                            //状态
+                            switch (byteBuff[6])
+                            {
+                                case 0x00:
+                                    txtRcvStatus.Text = "关机";
+                                    break;
+                                case 0x01:
+                                    txtRcvStatus.Text = "运行中";
+                                    break;
+                                case 0x02:
+                                    txtRcvStatus.Text = "暂停";
+                                    break;
+                                case 0x03:
+                                    txtRcvStatus.Text = "完成";
+                                    break;
+                                case 0xA1:
+                                    txtRcvStatus.Text = "配置";
+                                    break;
+                                default:
+                                    txtRcvStatus.Text = "未定义" + byteBuff[4].ToString("X2");
+                                    break;
+                            }
+
+                            //模式
+                            txtRcvAdjust.Text = "暂无";
+                            switch (byteBuff[7])
+                            {
+                                case 0x00:
+                                    txtRcvMode.Text = "关闭";
+                                    break;
+                                case 0x01:
+                                    txtRcvMode.Text = "清洁";
+                                    break;
+                                case 0x02:
+                                    txtRcvMode.Text = "保湿";
+                                    break;
+                                case 0x03:
+                                    txtRcvMode.Text = "导入";
+                                    break;
+                                case 0x04:
+                                    txtRcvMode.Text = "冷敷";
+                                    break;
+                                case 0x05:
+                                    txtRcvMode.Text = "水份检测";
+                                    break;
+                                default:
+                                    txtRcvMode.Text = "未定义" + byteBuff[4].ToString("X2");
+                                    break;
+                            }
+                            //运行时长
+                            txtRcvTime.Text = byteBuff[8].ToString() + "秒";
+
+                            //水份百分比
+                            txtRcvRh1.Text = byteBuff[9].ToString() + "%";
+
+                            //油分百分比
+                            txtRcvRh2.Text = byteBuff[10].ToString() + "%";
+
+                            //弹性百分比
+                            txtRcvRh3.Text = byteBuff[11].ToString() + "%";
+
+                            //环境温度
+                            txtRcvThTemp.Text = byteBuff[12].ToString() + "℃";
+                        }
 
                     }
                     else
@@ -812,6 +878,64 @@ namespace BeautyInstrumentSimulator
         private void txtRcvRhH_TextChanged(object sender, EventArgs e)
         {
             Console.WriteLine("水份检测参数："+txtRcvRhH.Text);
+        }
+
+        private string strRhOutPath = "";
+        private void menuRcvRhSave_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog save = new SaveFileDialog();
+            save.Filter = "表格格式|*.xls|文本格式|*.txt|所有格式|*.*";
+            save.Title = "保存参数";
+            save.RestoreDirectory = true;
+            save.FilterIndex = 1;
+            if (save.ShowDialog() == DialogResult.OK)
+            {
+                string str = save.FileName;
+                try
+                {
+                    using (StreamWriter sw = new StreamWriter(str, false, Encoding.GetEncoding("gb2312")))
+                    {
+                        sw.Write("");
+                        sw.Flush();
+                        sw.Close();
+                    }
+                }
+                catch (Exception)
+                {
+                    strRhOutPath = "";
+                    MessageBox.Show("文件保存失败，请重新选择。");
+                    return;
+                }
+                strRhOutPath = str;
+            }
+        }
+
+        private void menuRcvRhOpenXls_Click(object sender, EventArgs e)
+        {
+            if (File.Exists(strRhOutPath))
+            {
+                System.Diagnostics.Process.Start(strRhOutPath);
+            }
+            else
+            {
+                MessageBox.Show("未检测到保存数据。", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void menuRcvRhOpenChart_Click(object sender, EventArgs e)
+        {
+            if(Chart.XlsToJs(@"C:\Users\Chishin\Desktop\111.xls", 1, 3, 5))
+            {
+                MessageBox.Show("成功！");
+            }
+            //if (File.Exists(strRhOutPath))
+            //{
+            //    System.Diagnostics.Process.Start(strRhOutPath);
+            //}
+            //else
+            //{
+            //    MessageBox.Show("未检测到保存数据。", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
         }
     }
 }

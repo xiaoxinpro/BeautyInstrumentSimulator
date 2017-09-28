@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Chart.cs" />
     <Compile Include="Cmd.cs" />
     <Compile Include="frmAbout.cs">
       <SubType>Form</SubType>

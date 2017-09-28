@@ -85,10 +85,16 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.menuRcvRh = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.menuRcvRhSave = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
+            this.menuRcvRhOpenXls = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuRcvRhOpenChart = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1.SuspendLayout();
             this.menuMain.SuspendLayout();
             this.statusMain.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.menuRcvRh.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -198,7 +204,7 @@
             this.menuOpenSerial.Name = "menuOpenSerial";
             this.menuOpenSerial.ShortcutKeyDisplayString = "";
             this.menuOpenSerial.ShortcutKeys = System.Windows.Forms.Keys.F2;
-            this.menuOpenSerial.Size = new System.Drawing.Size(122, 38);
+            this.menuOpenSerial.Size = new System.Drawing.Size(122, 35);
             this.menuOpenSerial.Text = "打开串口";
             this.menuOpenSerial.Click += new System.EventHandler(this.打开端口ToolStripMenuItem_Click);
             // 
@@ -206,7 +212,7 @@
             // 
             this.menuSerial.Name = "menuSerial";
             this.menuSerial.ShortcutKeys = System.Windows.Forms.Keys.F3;
-            this.menuSerial.Size = new System.Drawing.Size(122, 38);
+            this.menuSerial.Size = new System.Drawing.Size(122, 35);
             this.menuSerial.Text = "串口设置";
             this.menuSerial.Click += new System.EventHandler(this.设置ToolStripMenuItem_Click);
             // 
@@ -214,7 +220,7 @@
             // 
             this.menuFunction.Name = "menuFunction";
             this.menuFunction.ShortcutKeys = System.Windows.Forms.Keys.F4;
-            this.menuFunction.Size = new System.Drawing.Size(122, 38);
+            this.menuFunction.Size = new System.Drawing.Size(122, 35);
             this.menuFunction.Text = "功能设置";
             this.menuFunction.Click += new System.EventHandler(this.menuFunction_Click);
             // 
@@ -235,7 +241,7 @@
             this.menuSaveCmd});
             this.menuCmd.Name = "menuCmd";
             this.menuCmd.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.B)));
-            this.menuCmd.Size = new System.Drawing.Size(74, 38);
+            this.menuCmd.Size = new System.Drawing.Size(74, 35);
             this.menuCmd.Text = "报文";
             // 
             // menuClearCmd
@@ -339,7 +345,7 @@
             // 
             this.menuAbout.Name = "menuAbout";
             this.menuAbout.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.menuAbout.Size = new System.Drawing.Size(74, 38);
+            this.menuAbout.Size = new System.Drawing.Size(74, 35);
             this.menuAbout.Text = "关于";
             this.menuAbout.Click += new System.EventHandler(this.关于ToolStripMenuItem_Click);
             // 
@@ -463,6 +469,7 @@
             // 
             // txtRcvRhH
             // 
+            this.txtRcvRhH.ContextMenuStrip = this.menuRcvRh;
             this.txtRcvRhH.Enabled = false;
             this.txtRcvRhH.Font = new System.Drawing.Font("微软雅黑", 7.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.txtRcvRhH.Location = new System.Drawing.Point(116, 485);
@@ -574,6 +581,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
+            this.label12.ContextMenuStrip = this.menuRcvRh;
             this.label12.ForeColor = System.Drawing.Color.Red;
             this.label12.Location = new System.Drawing.Point(21, 482);
             this.label12.Name = "label12";
@@ -662,6 +670,43 @@
             this.label3.TabIndex = 0;
             this.label3.Text = "状态：";
             // 
+            // menuRcvRh
+            // 
+            this.menuRcvRh.ImageScalingSize = new System.Drawing.Size(32, 32);
+            this.menuRcvRh.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuRcvRhSave,
+            this.toolStripMenuItem4,
+            this.menuRcvRhOpenXls,
+            this.menuRcvRhOpenChart});
+            this.menuRcvRh.Name = "menuRcvRh";
+            this.menuRcvRh.Size = new System.Drawing.Size(185, 118);
+            // 
+            // menuRcvRhSave
+            // 
+            this.menuRcvRhSave.Name = "menuRcvRhSave";
+            this.menuRcvRhSave.Size = new System.Drawing.Size(244, 36);
+            this.menuRcvRhSave.Text = "保存数据";
+            this.menuRcvRhSave.Click += new System.EventHandler(this.menuRcvRhSave_Click);
+            // 
+            // toolStripMenuItem4
+            // 
+            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(181, 6);
+            // 
+            // menuRcvRhOpenXls
+            // 
+            this.menuRcvRhOpenXls.Name = "menuRcvRhOpenXls";
+            this.menuRcvRhOpenXls.Size = new System.Drawing.Size(244, 36);
+            this.menuRcvRhOpenXls.Text = "打开表格";
+            this.menuRcvRhOpenXls.Click += new System.EventHandler(this.menuRcvRhOpenXls_Click);
+            // 
+            // menuRcvRhOpenChart
+            // 
+            this.menuRcvRhOpenChart.Name = "menuRcvRhOpenChart";
+            this.menuRcvRhOpenChart.Size = new System.Drawing.Size(184, 36);
+            this.menuRcvRhOpenChart.Text = "导出图表";
+            this.menuRcvRhOpenChart.Click += new System.EventHandler(this.menuRcvRhOpenChart_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(192F, 192F);
@@ -690,6 +735,7 @@
             this.statusMain.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            this.menuRcvRh.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -752,6 +798,11 @@
         private System.Windows.Forms.TextBox txtRcvMode;
         private System.Windows.Forms.TextBox txtRcvStatus;
         private System.Windows.Forms.ToolStripMenuItem menuFontCmd;
+        private System.Windows.Forms.ContextMenuStrip menuRcvRh;
+        private System.Windows.Forms.ToolStripMenuItem menuRcvRhSave;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem4;
+        private System.Windows.Forms.ToolStripMenuItem menuRcvRhOpenXls;
+        private System.Windows.Forms.ToolStripMenuItem menuRcvRhOpenChart;
     }
 }
 
