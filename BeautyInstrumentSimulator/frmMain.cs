@@ -182,8 +182,8 @@ namespace BeautyInstrumentSimulator
                     {
                         Byte[] receivedData = new Byte[sp1.BytesToRead];        //创建接收字节数组
                         sp1.Read(receivedData, 0, receivedData.Length);         //读取数据
-                        RcvDataProcess(receivedData);                           //接收数据处理
                         sp1.DiscardInBuffer();                                  //清空SerialPort控件的Buffer
+                        RcvDataProcess(receivedData);                           //接收数据处理
                         if(receivedData.Length <= 0)
                         {
                             return;
@@ -607,7 +607,7 @@ namespace BeautyInstrumentSimulator
             {
                 if ((byteBuff[0] == 0x22) && (byteBuff[1] == 12) && (byteBuff[2] == 0x52) && (byteBuff[3] == 0x02))
                 {
-                    if (byteBuff[13] == Uart.byteCheakSum(byteBuff, 2, byteBuff[1]))
+                    if (byteBuff[13] == Uart.byteCheakSum(byteBuff, 2, byteBuff[1] - 1)) 
                     {
                         if(byteBuff[5] == 0x03)
                         {
@@ -630,35 +630,58 @@ namespace BeautyInstrumentSimulator
                                     txtRcvStatus.Text = "配置";
                                     break;
                                 default:
-                                    txtRcvStatus.Text = "未定义" + byteBuff[4].ToString("X2");
+                                    txtRcvStatus.Text = "未定义" + byteBuff[6].ToString("X2");
                                     break;
                             }
 
                             //模式
-                            txtRcvAdjust.Text = "暂无";
-                            switch (byteBuff[7])
+                            if (Uart.isBinTest(byteBuff[7], 3))
                             {
-                                case 0x00:
-                                    txtRcvMode.Text = "关闭";
-                                    break;
-                                case 0x01:
-                                    txtRcvMode.Text = "清洁";
-                                    break;
-                                case 0x02:
-                                    txtRcvMode.Text = "保湿";
-                                    break;
-                                case 0x03:
-                                    txtRcvMode.Text = "导入";
-                                    break;
-                                case 0x04:
-                                    txtRcvMode.Text = "冷敷";
-                                    break;
-                                case 0x05:
-                                    txtRcvMode.Text = "水份检测";
-                                    break;
-                                default:
-                                    txtRcvMode.Text = "未定义" + byteBuff[4].ToString("X2");
-                                    break;
+                                txtRcvMode.Text = "水份检测";
+                                txtRcvAdjust.Text = "无";
+                                if (!cbRH.DroppedDown && cbRH.SelectedIndex != 1)
+                                {
+                                    cbRH.SelectedIndex = 1;
+                                }
+                            }
+                            else
+                            {
+                                if (!cbRH.DroppedDown && cbRH.SelectedIndex != 0)
+                                {
+                                    cbRH.SelectedIndex = 0;
+                                }
+                                string strMode = "无";
+                                string strAdjust = "无";
+                                if (Uart.isBinTest(byteBuff[7], 0))
+                                {
+                                    strAdjust = "弱";
+                                }
+                                if (Uart.isBinTest(byteBuff[7], 1))
+                                {
+                                    strAdjust = "中";
+                                }
+                                if (Uart.isBinTest(byteBuff[7], 2))
+                                {
+                                    strAdjust = "强";
+                                }
+                                if (Uart.isBinTest(byteBuff[7], 4))
+                                {
+                                    strMode = "清洁";
+                                }
+                                if (Uart.isBinTest(byteBuff[7], 5))
+                                {
+                                    strMode = "保湿";
+                                }
+                                if (Uart.isBinTest(byteBuff[7], 6))
+                                {
+                                    strMode = "导入";
+                                }
+                                if (Uart.isBinTest(byteBuff[7], 7))
+                                {
+                                    strMode = "冷敷";
+                                }
+                                txtRcvMode.Text = strMode;
+                                txtRcvAdjust.Text = strAdjust;
                             }
                             //运行时长
                             txtRcvTime.Text = byteBuff[8].ToString() + "秒";
@@ -703,9 +726,14 @@ namespace BeautyInstrumentSimulator
             {
                 tmp = 0x08;
             }
-            else
+            else if (cbRH.SelectedIndex == 0)
             {
                 tmp = 0x00;
+            }
+            else
+            {
+                Console.WriteLine("异常选择：" + cbRH.SelectedIndex);
+                return;
             }
             if (tmp != byteSendDataRH)
             {
@@ -776,7 +804,51 @@ namespace BeautyInstrumentSimulator
             }
             else if(Function.F_PROT_SEND == "1")
             {
+                //判断发送命令标志
+                if (isSendDataChange || (byteSendDataAPP != 0x00))
+                {
+                    byte[] byteSendData = { 0x22, 0x06, 0x52, 0x02, 0x01, 0x01, 0x00, 0x00 };
+                    isSendDataChange = false;
 
+                    //设置APP状态
+                    if (byteSendDataAPP != 0x00)
+                    {
+                        byteSendData[5] = 0x01;
+                        switch (byteSendDataAPP)
+                        {
+                            case 0xA0:
+                                byteSendData[6] = 0x01;
+                                break;
+                            case 0xA1:
+                                byteSendData[6] = 0x02;
+                                break;
+                            case 0xA2:
+                                byteSendData[6] = 0x03;
+                                break;
+                            case 0xAE:
+                                byteSendData[6] = 0x04;
+                                break;
+                            default:
+                                byteSendData[6] = 0x00;
+                                break;
+                        }
+                        // 复位APP状态
+                        byteSendDataAPP = 0x00;
+                        cbAPP.SelectedIndex = 0; 
+                    }
+                    //设置水份检测开关
+                    else
+                    {
+                        byteSendData[5] = 0x02;
+                        byteSendData[6] = Convert.ToByte(byteSendDataRH == Convert.ToByte(0x08) ? 0x01 : 0x00);
+                    }
+
+                    //计算校验和
+                    byteSendData[byteSendData.Length - 1] = Uart.byteCheakSum(byteSendData, 2, 5);
+
+                    //发送数据
+                    sp1_DataSend(Uart.byteToHexStr(byteSendData));
+                }
             }
             else
             {
