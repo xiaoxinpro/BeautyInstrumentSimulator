@@ -639,14 +639,14 @@ namespace BeautyInstrumentSimulator
                             {
                                 txtRcvMode.Text = "水份检测";
                                 txtRcvAdjust.Text = "无";
-                                if (!cbRH.DroppedDown && cbRH.SelectedIndex != 1)
+                                if (!isSendDataChange && !cbRH.DroppedDown && cbRH.SelectedIndex != 1)
                                 {
                                     cbRH.SelectedIndex = 1;
                                 }
                             }
                             else
                             {
-                                if (!cbRH.DroppedDown && cbRH.SelectedIndex != 0)
+                                if (!isSendDataChange && !cbRH.DroppedDown && cbRH.SelectedIndex != 0)
                                 {
                                     cbRH.SelectedIndex = 0;
                                 }
