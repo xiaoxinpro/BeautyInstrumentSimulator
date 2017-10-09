@@ -26,6 +26,7 @@ namespace BeautyInstrumentSimulator
 
         private void frmMain_Load(object sender, EventArgs e)
         {
+
         }
 
         private void frmMain_Shown(object sender, EventArgs e)
@@ -155,6 +156,11 @@ namespace BeautyInstrumentSimulator
             }
         }
 
+        /// <summary>
+        /// 串口接收数据入口
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void sp1_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             if (sp1.IsOpen)
@@ -211,6 +217,10 @@ namespace BeautyInstrumentSimulator
             }
         }
 
+        /// <summary>
+        /// 串口发送数据入口
+        /// </summary>
+        /// <param name="strBuff">发送字符串</param>
         void sp1_DataSend(string strBuff)
         {
             if (sp1.IsOpen)
@@ -284,6 +294,9 @@ namespace BeautyInstrumentSimulator
             }
         }
 
+        /// <summary>
+        /// 打开串口
+        /// </summary>
         public void funcOpenSerialPort()
         {
             if (!sp1.IsOpen)
@@ -333,6 +346,7 @@ namespace BeautyInstrumentSimulator
                     funcOutputLog("串口" + Profile.G_PORTNAME + "已经开启");
                     btnOpenFind.Enabled = true;
                     funcCloseUart();
+                    ClearRcvTxtData();
                 }
                 catch (System.Exception ex)
                 {
@@ -350,6 +364,9 @@ namespace BeautyInstrumentSimulator
             }
         }
 
+        /// <summary>
+        /// 关闭串口
+        /// </summary>
         public void funcCloseSerialPort()
         {
             btnOpenFind.Enabled = false;
@@ -357,7 +374,6 @@ namespace BeautyInstrumentSimulator
             menuOpenSerial.Text = "打开串口";
             funcOutputLog("串口" + Profile.G_PORTNAME + "已经关闭");
             tsSerial.Text = "串口：关闭";
-
             try
             {
                 sp1.Close();
@@ -369,6 +385,9 @@ namespace BeautyInstrumentSimulator
 
         }
 
+        /// <summary>
+        /// 打开串口发送
+        /// </summary>
         public void funcOpenUart()
         {
             if (sp1.IsOpen)
@@ -385,6 +404,9 @@ namespace BeautyInstrumentSimulator
             }
         }
 
+        /// <summary>
+        /// 关闭串口发送
+        /// </summary>
         public void funcCloseUart()
         {
             //cbAPP.SelectedIndex = 0;
@@ -393,6 +415,9 @@ namespace BeautyInstrumentSimulator
             btnOpenFind.Text = "开启查询";
         }
 
+        /// <summary>
+        /// 保存配置
+        /// </summary>
         public void funcSaveConfig()
         {
             //报文配置
@@ -413,6 +438,11 @@ namespace BeautyInstrumentSimulator
             Function.SaveFunction();
         }
 
+        /// <summary>
+        /// 输出日志文本
+        /// </summary>
+        /// <param name="strLog">文本</param>
+        /// <param name="strHead">类型</param>
         public void funcOutputLog(string strLog,string strHead = "提示")
         {
             if ((strHead == "提示") || (strHead == "错误") || (strHead == "警告") || (strHead == "状态"))
@@ -484,6 +514,26 @@ namespace BeautyInstrumentSimulator
 
         }
 
+        /// <summary>
+        /// 清空接收数据扩展文本框。
+        /// </summary>
+        private void ClearRcvTxtData()
+        {
+            foreach (Control item in this.panel2.Controls)
+            {
+                if (item.Name.IndexOf("txt") == 0)
+                {
+                    Console.WriteLine(item.Name, item.Name.IndexOf("txt"));
+                    item.Text = "";
+                }
+            }
+            txtRcvError.Text = "0";
+        }
+
+        /// <summary>
+        /// 接收数据处理
+        /// </summary>
+        /// <param name="byteBuff">接收缓存数组</param>
         private void RcvDataProcess(byte[] byteBuff)
         {
             if (byteBuff.Length == 4)
@@ -600,6 +650,8 @@ namespace BeautyInstrumentSimulator
                     else
                     {
                         //检验和错误
+                        txtRcvError.Text = Convert.ToString((Convert.ToInt64(txtRcvError.Text) + 1));
+                        funcOutputLog("校验和错误，应为" + byteBuff[16] + "，实为" + Uart.byteCheakSum(byteBuff, 2, 14) + "。", "错误");
                     }
                 }
             }
@@ -703,8 +755,14 @@ namespace BeautyInstrumentSimulator
                     else
                     {
                         //检验和错误
+                        txtRcvError.Text = Convert.ToString((Convert.ToInt64(txtRcvError.Text) + 1));
+                        funcOutputLog("校验和错误，应为" + byteBuff[13] + "，实为" + Uart.byteCheakSum(byteBuff, 2, byteBuff[1] - 1) + "。", "错误");
                     }
                 }
+            }
+            else
+            {
+                //txtRcvError.Text = Convert.ToString((Convert.ToInt64(txtRcvError.Text) + 1));
             }
         }
 
@@ -996,18 +1054,21 @@ namespace BeautyInstrumentSimulator
 
         private void menuRcvRhOpenChart_Click(object sender, EventArgs e)
         {
-            if(Chart.XlsToJs(@"C:\Users\Chishin\Desktop\111.xls", 1, 3, 5))
+            //if(Chart.XlsToJs(@"C:\Users\Chishin\Desktop\111.xls", 1, 3, 5))
+            //{
+            //    MessageBox.Show("成功！");
+            //}
+            if (File.Exists(strRhOutPath))
             {
-                MessageBox.Show("成功！");
+                if (Chart.XlsToJs(strRhOutPath, 1, 3, 5))
+                {
+                    MessageBox.Show("成功！");
+                }
             }
-            //if (File.Exists(strRhOutPath))
-            //{
-            //    System.Diagnostics.Process.Start(strRhOutPath);
-            //}
-            //else
-            //{
-            //    MessageBox.Show("未检测到保存数据。", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //}
+            else
+            {
+                MessageBox.Show("表格数据不存在。", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

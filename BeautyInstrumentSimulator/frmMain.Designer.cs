@@ -90,6 +90,8 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.txtRcvError = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.menuMain.SuspendLayout();
             this.statusMain.SuspendLayout();
@@ -108,7 +110,7 @@
             this.panel1.Controls.Add(this.btnEnd);
             this.panel1.Controls.Add(this.btnOpenFind);
             this.panel1.Location = new System.Drawing.Point(6, 30);
-            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(515, 33);
             this.panel1.TabIndex = 1;
@@ -122,7 +124,7 @@
             "关闭",
             "开启"});
             this.cbRH.Location = new System.Drawing.Point(162, 6);
-            this.cbRH.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cbRH.Margin = new System.Windows.Forms.Padding(2);
             this.cbRH.Name = "cbRH";
             this.cbRH.Size = new System.Drawing.Size(52, 25);
             this.cbRH.TabIndex = 2;
@@ -141,7 +143,7 @@
             "查找设备",
             "通信失败"});
             this.cbAPP.Location = new System.Drawing.Point(303, 6);
-            this.cbAPP.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cbAPP.Margin = new System.Windows.Forms.Padding(2);
             this.cbAPP.Name = "cbAPP";
             this.cbAPP.Size = new System.Drawing.Size(77, 25);
             this.cbAPP.TabIndex = 2;
@@ -171,7 +173,7 @@
             // 
             this.btnEnd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnEnd.Location = new System.Drawing.Point(440, 2);
-            this.btnEnd.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnEnd.Margin = new System.Windows.Forms.Padding(2);
             this.btnEnd.Name = "btnEnd";
             this.btnEnd.Size = new System.Drawing.Size(75, 29);
             this.btnEnd.TabIndex = 0;
@@ -183,7 +185,7 @@
             // 
             this.btnOpenFind.Enabled = false;
             this.btnOpenFind.Location = new System.Drawing.Point(2, 2);
-            this.btnOpenFind.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnOpenFind.Margin = new System.Windows.Forms.Padding(2);
             this.btnOpenFind.Name = "btnOpenFind";
             this.btnOpenFind.Size = new System.Drawing.Size(75, 29);
             this.btnOpenFind.TabIndex = 0;
@@ -365,7 +367,7 @@
             this.tsBaudRate,
             this.tsTime,
             this.tsStatus});
-            this.statusMain.Location = new System.Drawing.Point(0, 388);
+            this.statusMain.Location = new System.Drawing.Point(0, 435);
             this.statusMain.Name = "statusMain";
             this.statusMain.Padding = new System.Windows.Forms.Padding(0, 0, 7, 0);
             this.statusMain.Size = new System.Drawing.Size(532, 26);
@@ -420,10 +422,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.rtCmd.Font = new System.Drawing.Font("宋体", 10.125F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.rtCmd.Location = new System.Drawing.Point(6, 66);
-            this.rtCmd.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.rtCmd.Margin = new System.Windows.Forms.Padding(2);
             this.rtCmd.Name = "rtCmd";
             this.rtCmd.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.rtCmd.Size = new System.Drawing.Size(380, 298);
+            this.rtCmd.Size = new System.Drawing.Size(380, 345);
             this.rtCmd.TabIndex = 4;
             this.rtCmd.Text = "";
             this.rtCmd.TextChanged += new System.EventHandler(this.rtCmd_TextChanged);
@@ -440,6 +442,8 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel2.AutoScroll = true;
             this.panel2.BackColor = System.Drawing.SystemColors.Control;
+            this.panel2.Controls.Add(this.txtRcvError);
+            this.panel2.Controls.Add(this.label14);
             this.panel2.Controls.Add(this.txtRcvVersion);
             this.panel2.Controls.Add(this.txtRcvRhH);
             this.panel2.Controls.Add(this.txtRcvAdjust);
@@ -463,9 +467,9 @@
             this.panel2.Controls.Add(this.label4);
             this.panel2.Controls.Add(this.label3);
             this.panel2.Location = new System.Drawing.Point(388, 66);
-            this.panel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(134, 296);
+            this.panel2.Size = new System.Drawing.Size(134, 343);
             this.panel2.TabIndex = 5;
             // 
             // txtRcvVersion
@@ -473,7 +477,7 @@
             this.txtRcvVersion.Enabled = false;
             this.txtRcvVersion.Font = new System.Drawing.Font("微软雅黑", 7.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.txtRcvVersion.Location = new System.Drawing.Point(58, 268);
-            this.txtRcvVersion.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtRcvVersion.Margin = new System.Windows.Forms.Padding(2);
             this.txtRcvVersion.Name = "txtRcvVersion";
             this.txtRcvVersion.ReadOnly = true;
             this.txtRcvVersion.Size = new System.Drawing.Size(52, 21);
@@ -485,7 +489,7 @@
             this.txtRcvRhH.Enabled = false;
             this.txtRcvRhH.Font = new System.Drawing.Font("微软雅黑", 7.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.txtRcvRhH.Location = new System.Drawing.Point(58, 242);
-            this.txtRcvRhH.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtRcvRhH.Margin = new System.Windows.Forms.Padding(2);
             this.txtRcvRhH.Name = "txtRcvRhH";
             this.txtRcvRhH.ReadOnly = true;
             this.txtRcvRhH.Size = new System.Drawing.Size(52, 21);
@@ -534,7 +538,7 @@
             this.txtRcvAdjust.Enabled = false;
             this.txtRcvAdjust.Font = new System.Drawing.Font("微软雅黑", 7.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.txtRcvAdjust.Location = new System.Drawing.Point(58, 64);
-            this.txtRcvAdjust.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtRcvAdjust.Margin = new System.Windows.Forms.Padding(2);
             this.txtRcvAdjust.Name = "txtRcvAdjust";
             this.txtRcvAdjust.ReadOnly = true;
             this.txtRcvAdjust.Size = new System.Drawing.Size(52, 21);
@@ -545,7 +549,7 @@
             this.txtRcvThTemp.Enabled = false;
             this.txtRcvThTemp.Font = new System.Drawing.Font("微软雅黑", 7.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.txtRcvThTemp.Location = new System.Drawing.Point(58, 217);
-            this.txtRcvThTemp.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtRcvThTemp.Margin = new System.Windows.Forms.Padding(2);
             this.txtRcvThTemp.Name = "txtRcvThTemp";
             this.txtRcvThTemp.ReadOnly = true;
             this.txtRcvThTemp.Size = new System.Drawing.Size(52, 21);
@@ -556,7 +560,7 @@
             this.txtRcvHotTemp.Enabled = false;
             this.txtRcvHotTemp.Font = new System.Drawing.Font("微软雅黑", 7.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.txtRcvHotTemp.Location = new System.Drawing.Point(58, 192);
-            this.txtRcvHotTemp.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtRcvHotTemp.Margin = new System.Windows.Forms.Padding(2);
             this.txtRcvHotTemp.Name = "txtRcvHotTemp";
             this.txtRcvHotTemp.ReadOnly = true;
             this.txtRcvHotTemp.Size = new System.Drawing.Size(52, 21);
@@ -567,7 +571,7 @@
             this.txtRcvRh3.Enabled = false;
             this.txtRcvRh3.Font = new System.Drawing.Font("微软雅黑", 7.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.txtRcvRh3.Location = new System.Drawing.Point(58, 166);
-            this.txtRcvRh3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtRcvRh3.Margin = new System.Windows.Forms.Padding(2);
             this.txtRcvRh3.Name = "txtRcvRh3";
             this.txtRcvRh3.ReadOnly = true;
             this.txtRcvRh3.Size = new System.Drawing.Size(52, 21);
@@ -578,7 +582,7 @@
             this.txtRcvRh2.Enabled = false;
             this.txtRcvRh2.Font = new System.Drawing.Font("微软雅黑", 7.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.txtRcvRh2.Location = new System.Drawing.Point(58, 140);
-            this.txtRcvRh2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtRcvRh2.Margin = new System.Windows.Forms.Padding(2);
             this.txtRcvRh2.Name = "txtRcvRh2";
             this.txtRcvRh2.ReadOnly = true;
             this.txtRcvRh2.Size = new System.Drawing.Size(52, 21);
@@ -589,7 +593,7 @@
             this.txtRcvRh1.Enabled = false;
             this.txtRcvRh1.Font = new System.Drawing.Font("微软雅黑", 7.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.txtRcvRh1.Location = new System.Drawing.Point(58, 115);
-            this.txtRcvRh1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtRcvRh1.Margin = new System.Windows.Forms.Padding(2);
             this.txtRcvRh1.Name = "txtRcvRh1";
             this.txtRcvRh1.ReadOnly = true;
             this.txtRcvRh1.Size = new System.Drawing.Size(52, 21);
@@ -600,7 +604,7 @@
             this.txtRcvTime.Enabled = false;
             this.txtRcvTime.Font = new System.Drawing.Font("微软雅黑", 7.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.txtRcvTime.Location = new System.Drawing.Point(58, 90);
-            this.txtRcvTime.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtRcvTime.Margin = new System.Windows.Forms.Padding(2);
             this.txtRcvTime.Name = "txtRcvTime";
             this.txtRcvTime.ReadOnly = true;
             this.txtRcvTime.Size = new System.Drawing.Size(52, 21);
@@ -611,7 +615,7 @@
             this.txtRcvMode.Enabled = false;
             this.txtRcvMode.Font = new System.Drawing.Font("微软雅黑", 7.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.txtRcvMode.Location = new System.Drawing.Point(58, 38);
-            this.txtRcvMode.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtRcvMode.Margin = new System.Windows.Forms.Padding(2);
             this.txtRcvMode.Name = "txtRcvMode";
             this.txtRcvMode.ReadOnly = true;
             this.txtRcvMode.Size = new System.Drawing.Size(52, 21);
@@ -622,7 +626,7 @@
             this.txtRcvStatus.Enabled = false;
             this.txtRcvStatus.Font = new System.Drawing.Font("微软雅黑", 7.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.txtRcvStatus.Location = new System.Drawing.Point(58, 13);
-            this.txtRcvStatus.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtRcvStatus.Margin = new System.Windows.Forms.Padding(2);
             this.txtRcvStatus.Name = "txtRcvStatus";
             this.txtRcvStatus.ReadOnly = true;
             this.txtRcvStatus.Size = new System.Drawing.Size(52, 21);
@@ -642,7 +646,7 @@
             // 
             this.label12.AutoSize = true;
             this.label12.ContextMenuStrip = this.menuRcvRh;
-            this.label12.ForeColor = System.Drawing.Color.Red;
+            this.label12.ForeColor = System.Drawing.Color.Blue;
             this.label12.Location = new System.Drawing.Point(10, 241);
             this.label12.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label12.Name = "label12";
@@ -740,11 +744,34 @@
             this.label3.TabIndex = 0;
             this.label3.Text = "状态：";
             // 
+            // txtRcvError
+            // 
+            this.txtRcvError.Enabled = false;
+            this.txtRcvError.Font = new System.Drawing.Font("微软雅黑", 7.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.txtRcvError.Location = new System.Drawing.Point(58, 293);
+            this.txtRcvError.Margin = new System.Windows.Forms.Padding(2);
+            this.txtRcvError.Name = "txtRcvError";
+            this.txtRcvError.ReadOnly = true;
+            this.txtRcvError.Size = new System.Drawing.Size(52, 21);
+            this.txtRcvError.TabIndex = 3;
+            this.txtRcvError.Text = "0";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.ForeColor = System.Drawing.Color.Red;
+            this.label14.Location = new System.Drawing.Point(10, 291);
+            this.label14.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(51, 20);
+            this.label14.TabIndex = 2;
+            this.label14.Text = "异常：";
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(532, 414);
+            this.ClientSize = new System.Drawing.Size(532, 461);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.statusMain);
             this.Controls.Add(this.panel1);
@@ -752,7 +779,7 @@
             this.Controls.Add(this.rtCmd);
             this.Font = new System.Drawing.Font("微软雅黑", 10F);
             this.MainMenuStrip = this.menuMain;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MinimumSize = new System.Drawing.Size(548, 259);
             this.Name = "frmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -836,6 +863,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem4;
         private System.Windows.Forms.ToolStripMenuItem menuRcvRhOpenXls;
         private System.Windows.Forms.ToolStripMenuItem menuRcvRhOpenChart;
+        private System.Windows.Forms.TextBox txtRcvError;
+        private System.Windows.Forms.Label label14;
     }
 }
 
