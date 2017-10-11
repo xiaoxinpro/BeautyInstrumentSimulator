@@ -474,6 +474,9 @@ namespace BeautyInstrumentSimulator
                 case "警告":
                     color = Color.Orange;
                     break;
+                case "完成":
+                    color = Color.Purple;
+                    break;
                 default:
                     return;
             }
@@ -528,6 +531,24 @@ namespace BeautyInstrumentSimulator
                 }
             }
             txtRcvError.Text = "0";
+        }
+
+        /// <summary>
+        /// 检测任务完成
+        /// </summary>
+        private void DetectTaskDone()
+        {
+            if ((txtRcvStatus.Text == "完成") && (txtRcvMode.Text == "水份检测")) 
+            {
+                StringBuilder sbInfo = new StringBuilder();
+                sbInfo.Append("水份检测任务，");
+                sbInfo.Append("耗时" + txtRcvTime.Text + "秒，");
+                sbInfo.Append("水份" + txtRcvRh1.Text + "%，");
+                sbInfo.Append("油分" + txtRcvRh2.Text + "%，");
+                sbInfo.Append("弹性" + txtRcvRh3.Text + "%，");
+                sbInfo.Append("环温" + txtRcvThTemp.Text + "℃。");
+                funcOutputLog(sbInfo.ToString(), "完成");
+            }
         }
 
         /// <summary>
@@ -646,6 +667,9 @@ namespace BeautyInstrumentSimulator
 
                         //软件版本号
                         txtRcvVersion.Text = "V" + byteBuff[15].ToString();
+
+                        //检测完成
+                        DetectTaskDone();
                     }
                     else
                     {
@@ -751,6 +775,8 @@ namespace BeautyInstrumentSimulator
                             txtRcvThTemp.Text = byteBuff[12].ToString() + "℃";
                         }
 
+                        //检测完成
+                        DetectTaskDone();
                     }
                     else
                     {

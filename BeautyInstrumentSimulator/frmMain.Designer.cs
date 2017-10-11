@@ -63,6 +63,8 @@
             this.rtCmd = new System.Windows.Forms.RichTextBox();
             this.timTime = new System.Windows.Forms.Timer(this.components);
             this.panel2 = new System.Windows.Forms.Panel();
+            this.txtRcvError = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
             this.txtRcvVersion = new System.Windows.Forms.TextBox();
             this.txtRcvRhH = new System.Windows.Forms.TextBox();
             this.menuRcvRh = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -90,8 +92,6 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.txtRcvError = new System.Windows.Forms.TextBox();
-            this.label14 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.menuMain.SuspendLayout();
             this.statusMain.SuspendLayout();
@@ -472,6 +472,29 @@
             this.panel2.Size = new System.Drawing.Size(134, 343);
             this.panel2.TabIndex = 5;
             // 
+            // txtRcvError
+            // 
+            this.txtRcvError.Enabled = false;
+            this.txtRcvError.Font = new System.Drawing.Font("微软雅黑", 7.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.txtRcvError.Location = new System.Drawing.Point(58, 293);
+            this.txtRcvError.Margin = new System.Windows.Forms.Padding(2);
+            this.txtRcvError.Name = "txtRcvError";
+            this.txtRcvError.ReadOnly = true;
+            this.txtRcvError.Size = new System.Drawing.Size(52, 21);
+            this.txtRcvError.TabIndex = 3;
+            this.txtRcvError.Text = "0";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.ForeColor = System.Drawing.Color.Red;
+            this.label14.Location = new System.Drawing.Point(10, 291);
+            this.label14.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(51, 20);
+            this.label14.TabIndex = 2;
+            this.label14.Text = "异常：";
+            // 
             // txtRcvVersion
             // 
             this.txtRcvVersion.Enabled = false;
@@ -743,29 +766,6 @@
             this.label3.Size = new System.Drawing.Size(51, 20);
             this.label3.TabIndex = 0;
             this.label3.Text = "状态：";
-            // 
-            // txtRcvError
-            // 
-            this.txtRcvError.Enabled = false;
-            this.txtRcvError.Font = new System.Drawing.Font("微软雅黑", 7.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.txtRcvError.Location = new System.Drawing.Point(58, 293);
-            this.txtRcvError.Margin = new System.Windows.Forms.Padding(2);
-            this.txtRcvError.Name = "txtRcvError";
-            this.txtRcvError.ReadOnly = true;
-            this.txtRcvError.Size = new System.Drawing.Size(52, 21);
-            this.txtRcvError.TabIndex = 3;
-            this.txtRcvError.Text = "0";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.ForeColor = System.Drawing.Color.Red;
-            this.label14.Location = new System.Drawing.Point(10, 291);
-            this.label14.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(51, 20);
-            this.label14.TabIndex = 2;
-            this.label14.Text = "异常：";
             // 
             // frmMain
             // 
