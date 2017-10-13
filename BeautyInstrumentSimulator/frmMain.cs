@@ -542,14 +542,20 @@ namespace BeautyInstrumentSimulator
             {
                 StringBuilder sbInfo = new StringBuilder();
                 sbInfo.Append("水份检测任务，");
-                sbInfo.Append("耗时" + txtRcvTime.Text + "秒，");
-                sbInfo.Append("水份" + txtRcvRh1.Text + "%，");
-                sbInfo.Append("油分" + txtRcvRh2.Text + "%，");
-                sbInfo.Append("弹性" + txtRcvRh3.Text + "%，");
-                sbInfo.Append("环温" + txtRcvThTemp.Text + "℃。");
-                funcOutputLog(sbInfo.ToString(), "完成");
+                sbInfo.Append("耗时" + txtRcvTime.Text + "，");
+                sbInfo.Append("水份" + txtRcvRh1.Text + "，");
+                sbInfo.Append("油分" + txtRcvRh2.Text + "，");
+                sbInfo.Append("弹性" + txtRcvRh3.Text + "，");
+                sbInfo.Append("环温" + txtRcvThTemp.Text + "。");
+                string strInfo = sbInfo.ToString();
+                if (strPrevTaskData != strInfo)
+                {
+                    strPrevTaskData = strInfo;
+                    funcOutputLog(strInfo, "完成");
+                }
             }
         }
+        private string strPrevTaskData = "";
 
         /// <summary>
         /// 接收数据处理
