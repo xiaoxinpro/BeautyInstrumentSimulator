@@ -476,6 +476,7 @@ namespace BeautyInstrumentSimulator
                     break;
                 case "完成":
                     color = Color.Purple;
+                    txtTaskInfo.Text = strLog;
                     break;
                 default:
                     return;

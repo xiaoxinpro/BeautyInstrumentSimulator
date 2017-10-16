@@ -92,11 +92,14 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.txtTaskInfo = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.menuMain.SuspendLayout();
             this.statusMain.SuspendLayout();
             this.panel2.SuspendLayout();
             this.menuRcvRh.SuspendLayout();
+            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -425,7 +428,7 @@
             this.rtCmd.Margin = new System.Windows.Forms.Padding(2);
             this.rtCmd.Name = "rtCmd";
             this.rtCmd.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.rtCmd.Size = new System.Drawing.Size(380, 345);
+            this.rtCmd.Size = new System.Drawing.Size(380, 327);
             this.rtCmd.TabIndex = 4;
             this.rtCmd.Text = "";
             this.rtCmd.TextChanged += new System.EventHandler(this.rtCmd_TextChanged);
@@ -469,7 +472,7 @@
             this.panel2.Location = new System.Drawing.Point(388, 66);
             this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(134, 343);
+            this.panel2.Size = new System.Drawing.Size(134, 366);
             this.panel2.TabIndex = 5;
             // 
             // txtRcvError
@@ -767,11 +770,34 @@
             this.label3.TabIndex = 0;
             this.label3.Text = "状态：";
             // 
+            // panel3
+            // 
+            this.panel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel3.Controls.Add(this.txtTaskInfo);
+            this.panel3.Location = new System.Drawing.Point(6, 398);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(380, 34);
+            this.panel3.TabIndex = 6;
+            // 
+            // txtTaskInfo
+            // 
+            this.txtTaskInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtTaskInfo.Enabled = false;
+            this.txtTaskInfo.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.txtTaskInfo.Location = new System.Drawing.Point(0, 4);
+            this.txtTaskInfo.Name = "txtTaskInfo";
+            this.txtTaskInfo.ReadOnly = true;
+            this.txtTaskInfo.Size = new System.Drawing.Size(380, 23);
+            this.txtTaskInfo.TabIndex = 0;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(532, 461);
+            this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.statusMain);
             this.Controls.Add(this.panel1);
@@ -796,6 +822,8 @@
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.menuRcvRh.ResumeLayout(false);
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -865,6 +893,8 @@
         private System.Windows.Forms.ToolStripMenuItem menuRcvRhOpenChart;
         private System.Windows.Forms.TextBox txtRcvError;
         private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.TextBox txtTaskInfo;
     }
 }
 
