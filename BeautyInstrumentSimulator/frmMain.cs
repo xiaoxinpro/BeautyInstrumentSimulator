@@ -539,15 +539,32 @@ namespace BeautyInstrumentSimulator
         /// </summary>
         private void DetectTaskDone()
         {
-            if ((txtRcvStatus.Text == "完成") && (txtRcvMode.Text == "水份检测")) 
+            if (txtRcvStatus.Text == "完成") 
             {
                 StringBuilder sbInfo = new StringBuilder();
-                sbInfo.Append("水份检测任务，");
-                sbInfo.Append("耗时" + txtRcvTime.Text + "，");
-                sbInfo.Append("水份" + txtRcvRh1.Text + "，");
-                sbInfo.Append("油分" + txtRcvRh2.Text + "，");
-                sbInfo.Append("弹性" + txtRcvRh3.Text + "，");
-                sbInfo.Append("环温" + txtRcvThTemp.Text + "。");
+                switch (txtRcvMode.Text)
+                {
+                    case "水份检测":
+                        sbInfo.Append("水份检测任务，");
+                        sbInfo.Append("耗时" + txtRcvTime.Text + "，");
+                        sbInfo.Append("水份" + txtRcvRh1.Text + "，");
+                        sbInfo.Append("油分" + txtRcvRh2.Text + "，");
+                        sbInfo.Append("弹性" + txtRcvRh3.Text + "，");
+                        sbInfo.Append("环温" + txtRcvThTemp.Text + "。");
+                        break;
+                    case "清洁":
+                    case "保湿":
+                    case "导入":
+                    case "冷敷":
+                        sbInfo.Append(txtRcvMode.Text + "模式，");
+                        sbInfo.Append(txtRcvAdjust.Text + "强度，");
+                        sbInfo.Append("耗时" + txtRcvTime.Text + "。");
+                        break;
+                    default:
+                        sbInfo.Append("未知任务，" + txtRcvMode.Text);
+                        break;
+                }
+
                 string strInfo = sbInfo.ToString();
                 if (strPrevTaskData != strInfo)
                 {
