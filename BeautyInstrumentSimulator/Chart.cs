@@ -9,6 +9,7 @@ namespace BeautyInstrumentSimulator
 {
     class Chart
     {
+        static string strDirectory = "";
         /// <summary>
         /// 表格文件转为js数组文件
         /// </summary>
@@ -26,7 +27,7 @@ namespace BeautyInstrumentSimulator
             }
 
             //设置输出目录
-            string strDirectory = System.AppDomain.CurrentDomain.SetupInformation.ApplicationBase + @"Chart\";
+            strDirectory = System.AppDomain.CurrentDomain.SetupInformation.ApplicationBase + @"Chart\";
             if (!Directory.Exists(strDirectory))
             {
                 try
@@ -102,9 +103,20 @@ namespace BeautyInstrumentSimulator
         /// 打开图表文件
         /// </summary>
         /// <param name="strPath">路径</param>
-        public static void OpenChart(string strPath = @"~\Chart\index.html")
+        public static void OpenChart(string strPath = null)
         {
-            System.Diagnostics.Process.Start(strPath);
+            if (strPath == null)
+            {
+                strPath = strDirectory + @"index.html";
+            }
+            if (File.Exists(strPath))
+            {
+                System.Diagnostics.Process.Start(strPath);
+            }
+            else
+            {
+                MessageBox.Show("路径" + strPath + "不存在。", "错误305", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         /// <summary>

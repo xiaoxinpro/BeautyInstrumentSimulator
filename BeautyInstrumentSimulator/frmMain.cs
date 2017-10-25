@@ -1057,37 +1057,70 @@ namespace BeautyInstrumentSimulator
 
         private void txtRcvRhH_TextChanged(object sender, EventArgs e)
         {
-            Console.WriteLine("水份检测参数："+txtRcvRhH.Text);
+            //Console.WriteLine("水份检测参数："+txtRcvRhH.Text);
+            if (strRhOutPath == "")
+            {
+                if (!File.Exists(strRhOutPath))
+                {
+                    strRhOutPath = "";
+                    return;
+                }
+                try
+                {
+                    StreamWriter swOutputCmd = new StreamWriter(strRhOutPath, true, Encoding.GetEncoding("gb2312"));
+                    swOutputCmd.WriteLine((Uart.GetTimeStamp() - StartTimeNum) + "\t" + txtRcvRhH.Text);
+                    swOutputCmd.Flush();
+                    swOutputCmd.Close();
+                }
+                catch
+                {
+                    strRhOutPath = "";
+                    menuRcvRhSave.Text = "保存数据";
+                    MessageBox.Show("动态输出文件无法写入，已关闭。", "错误", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                }
+            }
         }
 
         private string strRhOutPath = "";
+        public long StartTimeNum;
         private void menuRcvRhSave_Click(object sender, EventArgs e)
         {
-            SaveFileDialog save = new SaveFileDialog();
-            save.Filter = "表格格式|*.xls|文本格式|*.txt|所有格式|*.*";
-            save.Title = "保存参数";
-            save.RestoreDirectory = true;
-            save.FilterIndex = 1;
-            if (save.ShowDialog() == DialogResult.OK)
+            if (menuRcvRhSave.Text == "保存数据")
             {
-                string str = save.FileName;
-                try
+                StartTimeNum = Uart.GetTimeStamp();
+                SaveFileDialog save = new SaveFileDialog();
+                save.Filter = "表格格式|*.xls|文本格式|*.txt|所有格式|*.*";
+                save.Title = "保存参数";
+                save.RestoreDirectory = true;
+                save.FilterIndex = 1;
+                if (save.ShowDialog() == DialogResult.OK)
                 {
-                    using (StreamWriter sw = new StreamWriter(str, false, Encoding.GetEncoding("gb2312")))
+                    string str = save.FileName;
+                    try
                     {
-                        sw.Write("");
-                        sw.Flush();
-                        sw.Close();
+                        using (StreamWriter sw = new StreamWriter(str, false, Encoding.GetEncoding("gb2312")))
+                        {
+                            sw.Write("时间" + "\t" + "参数");
+                            sw.Flush();
+                            sw.Close();
+                        }
                     }
+                    catch (Exception)
+                    {
+                        strRhOutPath = "";
+                        MessageBox.Show("文件保存失败，请重新选择。");
+                        return;
+                    }
+                    strRhOutPath = str;
+                    menuRcvRhSave.Text = "取消保存";
                 }
-                catch (Exception)
-                {
-                    strRhOutPath = "";
-                    MessageBox.Show("文件保存失败，请重新选择。");
-                    return;
-                }
-                strRhOutPath = str;
             }
+            else
+            {
+                strRhOutPath = "";
+                menuRcvRhSave.Text = "保存数据";
+            }
+
         }
 
         private void menuRcvRhOpenXls_Click(object sender, EventArgs e)
@@ -1110,9 +1143,10 @@ namespace BeautyInstrumentSimulator
             //}
             if (File.Exists(strRhOutPath))
             {
-                if (Chart.XlsToJs(strRhOutPath, 1, 3, 5))
+                if (Chart.XlsToJs(strRhOutPath, 1, 2))
                 {
-                    MessageBox.Show("成功！");
+                    MessageBox.Show("图表导出成功！","成功",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                    Chart.OpenChart();
                 }
             }
             else
