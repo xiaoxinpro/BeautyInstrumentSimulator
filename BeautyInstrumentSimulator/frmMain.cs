@@ -797,6 +797,9 @@ namespace BeautyInstrumentSimulator
 
                             //环境温度
                             txtRcvThTemp.Text = byteBuff[12].ToString() + "℃";
+
+                            //发送应答数据
+                            AskDataSend();
                         }
 
                         //检测完成
@@ -814,6 +817,17 @@ namespace BeautyInstrumentSimulator
             {
                 //txtRcvError.Text = Convert.ToString((Convert.ToInt64(txtRcvError.Text) + 1));
             }
+        }
+
+        private void AskDataSend(byte cmd = 0x03, byte data = 0x00)
+        {
+            byte[] byteSendData = { 0x22, 0x06, 0x52, 0x02, 0x02, 0x00, 0x01, 0x00 };
+            byteSendData[5] = cmd;
+            byteSendData[6] = data;
+            //计算校验和
+            byteSendData[byteSendData.Length - 1] = Uart.byteCheakSum(byteSendData, 2, 5);
+            //发送数据
+            sp1_DataSend(Uart.byteToHexStr(byteSendData));
         }
 
         private bool isSendDataChange = false;
