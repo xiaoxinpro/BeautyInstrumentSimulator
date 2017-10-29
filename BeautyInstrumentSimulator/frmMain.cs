@@ -1155,17 +1155,43 @@ namespace BeautyInstrumentSimulator
             //{
             //    MessageBox.Show("成功！");
             //}
-            if (File.Exists(strRhOutPath))
+            string strPath = strRhOutPath;
+
+            if (!File.Exists(strPath))
             {
-                if (Chart.XlsToJs(strRhOutPath, 1, 2))
+                DialogResult dr = MessageBox.Show("表格数据不存在，是否手动选择表格文件？", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (dr == DialogResult.Yes) 
                 {
-                    MessageBox.Show("图表导出成功！","成功",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                    OpenFileDialog ofd = new OpenFileDialog();
+                    ofd.Multiselect = false;
+                    ofd.Title = "选择表格文件";
+                    ofd.Filter = "表格格式|*.xls|文本格式|*.txt|所有格式|*.*";
+                    if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    {
+                        strPath = ofd.FileName;
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+                else
+                {
+                    return;
+                }
+            }
+
+            if (File.Exists(strPath))
+            {
+                if (Chart.XlsToJs(strPath, 1, 2))
+                {
+                    MessageBox.Show("图表导出成功！", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     Chart.OpenChart();
                 }
             }
             else
             {
-                MessageBox.Show("表格数据不存在。", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("表格数据不存在！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
