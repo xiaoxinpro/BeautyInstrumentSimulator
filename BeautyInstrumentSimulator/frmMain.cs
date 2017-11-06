@@ -813,6 +813,145 @@ namespace BeautyInstrumentSimulator
                     }
                 }
             }
+            else if (byteBuff.Length == 15)
+            {
+                if ((byteBuff[0] == 0x22) && (byteBuff[1] == 13) && (byteBuff[2] == 0x52) && (byteBuff[3] == 0x02))
+                {
+                    if (byteBuff[13] == Uart.byteCheakSum(byteBuff, 2, byteBuff[1] - 1))
+                    {
+                        if (byteBuff[5] == 0x03)
+                        {
+                            //状态
+                            switch (byteBuff[6])
+                            {
+                                case 0x00:
+                                    txtRcvStatus.Text = "关机";
+                                    break;
+                                case 0x01:
+                                    txtRcvStatus.Text = "运行中";
+                                    break;
+                                case 0x02:
+                                    txtRcvStatus.Text = "暂停";
+                                    break;
+                                case 0x03:
+                                    txtRcvStatus.Text = "完成";
+                                    break;
+                                case 0xA1:
+                                    txtRcvStatus.Text = "配置";
+                                    break;
+                                default:
+                                    txtRcvStatus.Text = "未定义" + byteBuff[6].ToString("X2");
+                                    break;
+                            }
+
+                            //模式
+                            if (Uart.isBinTest(byteBuff[7], 3))
+                            {
+                                txtRcvMode.Text = "水份检测";
+                                txtRcvAdjust.Text = "无";
+                                if (!isSendDataChange && !cbRH.DroppedDown && cbRH.SelectedIndex != 1)
+                                {
+                                    cbRH.SelectedIndex = 1;
+                                }
+                            }
+                            else
+                            {
+                                if (!isSendDataChange && !cbRH.DroppedDown && cbRH.SelectedIndex != 0)
+                                {
+                                    cbRH.SelectedIndex = 0;
+                                }
+                                string strMode = "无";
+                                string strAdjust = "无";
+                                if (Uart.isBinTest(byteBuff[7], 0))
+                                {
+                                    strAdjust = "弱";
+                                }
+                                if (Uart.isBinTest(byteBuff[7], 1))
+                                {
+                                    strAdjust = "中";
+                                }
+                                if (Uart.isBinTest(byteBuff[7], 2))
+                                {
+                                    strAdjust = "强";
+                                }
+                                if (Uart.isBinTest(byteBuff[7], 4))
+                                {
+                                    strMode = "清洁";
+                                }
+                                if (Uart.isBinTest(byteBuff[7], 5))
+                                {
+                                    strMode = "保湿";
+                                }
+                                if (Uart.isBinTest(byteBuff[7], 6))
+                                {
+                                    strMode = "导入";
+                                }
+                                if (Uart.isBinTest(byteBuff[7], 7))
+                                {
+                                    strMode = "冷敷";
+                                }
+                                txtRcvMode.Text = strMode;
+                                txtRcvAdjust.Text = strAdjust;
+                            }
+                            //运行时长
+                            txtRcvTime.Text = byteBuff[8].ToString() + "秒";
+
+                            //水份百分比
+                            txtRcvRh1.Text = byteBuff[9].ToString() + "%";
+
+                            //油分百分比
+                            txtRcvRh2.Text = byteBuff[10].ToString() + "%";
+
+                            //弹性百分比
+                            txtRcvRh3.Text = byteBuff[11].ToString() + "%";
+
+                            //环境温度
+                            txtRcvThTemp.Text = byteBuff[12].ToString() + "℃";
+
+                            //电量
+                            switch (byteBuff[13])
+                            {
+                                case 0x00:
+                                    txtRcvVersion.Text = "充电中";
+                                    break;
+                                case 0x01:
+                                    txtRcvVersion.Text = "一格";
+                                    break;
+                                case 0x02:
+                                    txtRcvVersion.Text = "二格";
+                                    break;
+                                case 0x03:
+                                    txtRcvVersion.Text = "三格";
+                                    break;
+                                case 0x04:
+                                    txtRcvVersion.Text = "四格";
+                                    break;
+                                case 0x05:
+                                    txtRcvVersion.Text = "满格";
+                                    break;
+                                case 0x06:
+                                    txtRcvVersion.Text = "充电完成";
+                                    break;
+                                default:
+                                    txtRcvVersion.Text = byteBuff[13].ToString();
+                                    break;
+                            }
+
+                            //发送应答数据
+                            AskDataSend();
+                        }
+
+                        //检测完成
+                        DetectTaskDone();
+                    }
+                    else
+                    {
+                        //检验和错误
+                        txtRcvError.Text = Convert.ToString((Convert.ToInt64(txtRcvError.Text) + 1));
+                        funcOutputLog("校验和错误，应为" + byteBuff[13] + "，实为" + Uart.byteCheakSum(byteBuff, 2, byteBuff[1] - 1) + "。", "错误");
+                    }
+                }
+            }
             else
             {
                 //txtRcvError.Text = Convert.ToString((Convert.ToInt64(txtRcvError.Text) + 1));
