@@ -817,7 +817,7 @@ namespace BeautyInstrumentSimulator
             {
                 if ((byteBuff[0] == 0x22) && (byteBuff[1] == 13) && (byteBuff[2] == 0x52) && (byteBuff[3] == 0x02))
                 {
-                    if (byteBuff[13] == Uart.byteCheakSum(byteBuff, 2, byteBuff[1] - 1))
+                    if (byteBuff[14] == Uart.byteCheakSum(byteBuff, 2, byteBuff[1] - 1))
                     {
                         if (byteBuff[5] == 0x03)
                         {
@@ -952,9 +952,24 @@ namespace BeautyInstrumentSimulator
                     }
                 }
             }
+            else if (byteBuff.Length == 8)
+            {
+                if ((byteBuff[0] == 0x22) && (byteBuff[1] == 6) && (byteBuff[2] == 0x52) && (byteBuff[3] == 0x02))
+                {
+                    if (byteBuff[7] == Uart.byteCheakSum(byteBuff, 2, byteBuff[1] - 1))
+                    {
+                        if(byteBuff[5] == 0x0E)
+                        {
+                            txtRcvError.Text = Convert.ToString((Convert.ToInt64(txtRcvError.Text) + 1));
+                            funcOutputLog("接收端通信错误，错误代号：" + byteBuff[6] + "。", "错误");
+                        }
+                    }
+                }
+
+            }
             else
             {
-                //txtRcvError.Text = Convert.ToString((Convert.ToInt64(txtRcvError.Text) + 1));
+                txtRcvError.Text = Convert.ToString((Convert.ToInt64(txtRcvError.Text) + 1));
             }
         }
 
