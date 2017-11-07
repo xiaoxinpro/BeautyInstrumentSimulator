@@ -699,7 +699,7 @@ namespace BeautyInstrumentSimulator
                     {
                         //检验和错误
                         txtRcvError.Text = Convert.ToString((Convert.ToInt64(txtRcvError.Text) + 1));
-                        funcOutputLog("校验和错误，应为" + byteBuff[16] + "，实为" + Uart.byteCheakSum(byteBuff, 2, 14) + "。", "错误");
+                        funcOutputLog("校验和错误，应为" + Uart.byteCheakSum(byteBuff, 2, 14).ToString("X2") + "，实为" + byteBuff[16] + "。", "错误");
                     }
                 }
             }
@@ -809,7 +809,7 @@ namespace BeautyInstrumentSimulator
                     {
                         //检验和错误
                         txtRcvError.Text = Convert.ToString((Convert.ToInt64(txtRcvError.Text) + 1));
-                        funcOutputLog("校验和错误，应为" + byteBuff[13] + "，实为" + Uart.byteCheakSum(byteBuff, 2, byteBuff[1] - 1) + "。", "错误");
+                        funcOutputLog("校验和错误，应为" + Uart.byteCheakSum(byteBuff, 2, byteBuff[1] - 1).ToString("X2") + "，实为" + byteBuff[13] + "。", "错误");
                     }
                 }
             }
@@ -948,7 +948,7 @@ namespace BeautyInstrumentSimulator
                     {
                         //检验和错误
                         txtRcvError.Text = Convert.ToString((Convert.ToInt64(txtRcvError.Text) + 1));
-                        funcOutputLog("校验和错误，应为" + byteBuff[13] + "，实为" + Uart.byteCheakSum(byteBuff, 2, byteBuff[1] - 1) + "。", "错误");
+                        funcOutputLog("校验和错误，应为" + Uart.byteCheakSum(byteBuff, 2, byteBuff[1] - 1).ToString("X2") + "，实为" + byteBuff[14] + "。", "错误");
                     }
                 }
             }
@@ -970,6 +970,7 @@ namespace BeautyInstrumentSimulator
             else
             {
                 txtRcvError.Text = Convert.ToString((Convert.ToInt64(txtRcvError.Text) + 1));
+                funcOutputLog("接收到无法解析的数据。", "错误");
             }
         }
 
