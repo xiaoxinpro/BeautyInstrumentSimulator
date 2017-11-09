@@ -581,7 +581,11 @@ namespace BeautyInstrumentSimulator
         /// <param name="byteBuff">接收缓存数组</param>
         private void RcvDataProcess(byte[] byteBuff)
         {
-            if (byteBuff.Length == 4)
+            if (byteBuff.Length <= 0)
+            {
+                return;
+            }
+            else if (byteBuff.Length == 4)
             {
                 if ((byteBuff[0] == 0x22) && (byteBuff[1] == 0x02))
                 {
